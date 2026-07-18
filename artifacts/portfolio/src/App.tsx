@@ -10,7 +10,7 @@ const ABOUT_TEXT =
   "Я проектирую системы обучения внутри компаний и помогаю командам выстраивать эффективные образовательные процессы. Работаю на стыке методологии, дизайна опыта и управления знаниями.";
 const TELEGRAM_LINK = "https://telegram.me/leahlysenko";
 
-// 4 текстовых факта под фото
+// 4 текстовых факта под фото — редактируй текст в кавычках
 const FACTS = [
   "Выпускница CG Education и School of Education",
   "Проектирую обучение для взрослых и подростков в IT, нейротехе и креативных индустриях",
@@ -101,6 +101,45 @@ const stagger = {
   visible: { transition: { staggerChildren: 0.09 } },
 };
 
+// Minimalist monochrome SVG icons for each fact
+const FactIcons = [
+  // 01 — diploma / graduation cap
+  () => (
+    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M14 4L2 10l12 6 12-6-12-6z" />
+      <path d="M2 10v8" />
+      <path d="M8 13v6c0 2 2.5 4 6 4s6-2 6-4v-6" />
+    </svg>
+  ),
+  // 02 — people / learning group
+  () => (
+    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="10" cy="9" r="3.5" />
+      <circle cx="20" cy="9" r="3.5" />
+      <path d="M3 23c0-4 3.1-7 7-7" />
+      <path d="M13 23c0-4 3.1-7 7-7s7 3 7 7" />
+    </svg>
+  ),
+  // 03 — workflow / checklist
+  () => (
+    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="4" y="3" width="20" height="22" rx="2" />
+      <path d="M9 9h10M9 14h10M9 19h6" />
+      <circle cx="6.5" cy="9" r="0.8" fill="currentColor" stroke="none" />
+      <circle cx="6.5" cy="14" r="0.8" fill="currentColor" stroke="none" />
+      <circle cx="6.5" cy="19" r="0.8" fill="currentColor" stroke="none" />
+    </svg>
+  ),
+  // 04 — helping hand / lightbulb
+  () => (
+    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M10 21h8M11 24h6" />
+      <path d="M14 3a7 7 0 0 1 5 11.95V18a1 1 0 0 1-1 1h-8a1 1 0 0 1-1-1v-3.05A7 7 0 0 1 14 3z" />
+      <path d="M11 18v-3M17 18v-3" />
+    </svg>
+  ),
+];
+
 function PillButton({
   href,
   children,
@@ -162,7 +201,6 @@ function ProjectModal({
         >
           <X className="w-4 h-4" />
         </button>
-
         <span className="text-[11px] font-mono text-muted-foreground tracking-[0.18em] uppercase mb-5 block">
           {project.id}
         </span>
@@ -198,8 +236,8 @@ export default function App() {
           <span className="text-sm font-bold tracking-widest uppercase shrink-0">{NAME}</span>
           <div className="hidden md:flex items-center gap-8 text-xs tracking-[0.12em] uppercase text-muted-foreground">
             <a href="#about" className="hover:text-foreground transition-colors">Обо мне</a>
-            <a href="#services" className="hover:text-foreground transition-colors">Услуги</a>
-            <a href="#projects" className="hover:text-foreground transition-colors">Проекты</a>
+            <a href="#services" className="hover:text-foreground transition-colors">С чем помогу</a>
+            <a href="#projects" className="hover:text-foreground transition-colors">Мои проекты</a>
           </div>
           <PillButton href={TELEGRAM_LINK}>Написать в Telegram</PillButton>
         </div>
@@ -209,11 +247,9 @@ export default function App() {
 
         {/* ── HERO ── */}
         <section className="pt-16 pb-12 grid grid-cols-[1fr_1fr] gap-8 md:gap-12 items-center">
-
           {/* Left: greeting + role */}
           <motion.div initial="hidden" animate="visible" variants={stagger}>
-            {/* Two-line headline: bold grotesque + serif italic — like ref 1 */}
-            <motion.h1 variants={fadeUp} className="leading-[1.0] tracking-tight mb-6">
+            <motion.h1 variants={fadeUp} className="leading-[1.02] tracking-tight mb-6">
               <span className="block text-5xl md:text-7xl font-bold font-sans">
                 Привет,
               </span>
@@ -229,7 +265,7 @@ export default function App() {
             </motion.p>
           </motion.div>
 
-          {/* Right: photo — arch shape (rounded bottom), bigger + centered */}
+          {/* Right: photo — arch shape */}
           <motion.div
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
@@ -241,16 +277,11 @@ export default function App() {
               borderRadius: "0 0 9999px 9999px",
             }}
           >
-            {/*
-              ФОТО: раскомментируй строку ниже и укажи путь к своему фото.
-              Положи фото в папку artifacts/portfolio/public/ и назови, например, photo.jpg.
-              <img src="/photo.jpg" alt="Фото" className="w-full h-full object-cover object-top" />
-            */}
-            <div className="w-full h-full flex items-center justify-center">
-              <span className="text-[11px] tracking-widest uppercase text-muted-foreground">
-                Ваше фото
-              </span>
-            </div>
+            <img
+              src="/photo.jpg"
+              alt="Лия Лысенко"
+              className="w-full h-full object-cover object-top"
+            />
           </motion.div>
         </section>
 
@@ -259,18 +290,21 @@ export default function App() {
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: 0.2 }}
             variants={stagger}
             className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8"
           >
-            {FACTS.map((text, i) => (
-              <motion.div key={i} variants={fadeUp} className="flex flex-col gap-3">
-                <span className="text-xs font-mono text-muted-foreground tracking-widest">
-                  0{i + 1}
-                </span>
-                <p className="text-sm font-serif leading-snug text-foreground/80">{text}</p>
-              </motion.div>
-            ))}
+            {FACTS.map((text, i) => {
+              const Icon = FactIcons[i];
+              return (
+                <motion.div key={i} variants={fadeUp} className="flex flex-col gap-3">
+                  <span className="text-muted-foreground/70">
+                    <Icon />
+                  </span>
+                  <p className="text-sm font-serif leading-snug text-foreground/80">{text}</p>
+                </motion.div>
+              );
+            })}
           </motion.div>
         </section>
 
@@ -279,7 +313,7 @@ export default function App() {
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-60px" }}
+            viewport={{ once: true, amount: 0.2 }}
             variants={stagger}
             className="grid grid-cols-1 md:grid-cols-[2fr_3fr] gap-12 items-start"
           >
@@ -291,7 +325,7 @@ export default function App() {
             </motion.h2>
             <motion.p
               variants={fadeUp}
-              className="text-lg md:text-xl font-serif leading-relaxed text-muted-foreground"
+              className="text-base font-serif leading-relaxed text-muted-foreground"
             >
               {ABOUT_TEXT}
             </motion.p>
@@ -303,10 +337,10 @@ export default function App() {
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-60px" }}
+            viewport={{ once: true, amount: 0.1 }}
             variants={stagger}
           >
-            {/* Heading + subtitle — unified with the columns below, no inner separator */}
+            {/* Heading + subtitle — unified block, no separator before columns */}
             <div className="grid grid-cols-1 md:grid-cols-[2fr_3fr] gap-12 mb-14">
               <motion.h2
                 variants={fadeUp}
@@ -322,7 +356,7 @@ export default function App() {
               </motion.p>
             </div>
 
-            {/* Three columns — no border-t, visually one block with the header above */}
+            {/* Three columns */}
             <motion.div
               variants={stagger}
               className="grid grid-cols-1 md:grid-cols-3 gap-10"
@@ -352,65 +386,55 @@ export default function App() {
 
         {/* ── PROJECTS ── */}
         <section id="projects" className="py-20 scroll-mt-16 border-t border-border">
+          {/* Heading — rendered without whileInView to guarantee visibility */}
+          <div className="grid grid-cols-1 md:grid-cols-[2fr_3fr] gap-12 mb-12">
+            <h2 className="text-3xl md:text-5xl font-bold uppercase leading-none">
+              Мои проекты
+            </h2>
+            <p className="text-base font-serif leading-relaxed text-muted-foreground">
+              {PROJECTS_SUBTITLE}
+            </p>
+          </div>
+
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-60px" }}
+            viewport={{ once: true, amount: 0.1 }}
             variants={stagger}
+            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-px bg-border"
           >
-            {/* Heading row */}
-            <div className="grid grid-cols-1 md:grid-cols-[2fr_3fr] gap-12 mb-12">
-              <motion.h2
+            {PROJECTS.map((p) => (
+              <motion.button
+                key={p.id}
                 variants={fadeUp}
-                className="text-3xl md:text-5xl font-bold uppercase leading-none"
+                onClick={() => setActiveProject(p)}
+                className="group text-left bg-background p-6 flex flex-col gap-3 cursor-pointer hover:bg-secondary/70 transition-colors"
+                style={{ minHeight: "220px" }}
               >
-                Мои проекты
-              </motion.h2>
-              <motion.p
-                variants={fadeUp}
-                className="text-base font-serif leading-relaxed text-muted-foreground"
-              >
-                {PROJECTS_SUBTITLE}
-              </motion.p>
-            </div>
-
-            <motion.div
-              variants={stagger}
-              className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-px bg-border"
-            >
-              {PROJECTS.map((p) => (
-                <motion.button
-                  key={p.id}
-                  variants={fadeUp}
-                  onClick={() => setActiveProject(p)}
-                  className="group text-left bg-background p-6 flex flex-col gap-3 cursor-pointer hover:bg-secondary/70 transition-colors"
-                  style={{ minHeight: "220px" }}
-                >
-                  <span className="text-xs font-mono text-muted-foreground tracking-widest">
-                    {p.id}
-                  </span>
-                  <h3 className="text-base font-bold leading-snug group-hover:text-accent transition-colors flex-1">
-                    {p.title}
-                  </h3>
-                  <p className="text-xs font-serif text-muted-foreground">{p.subtitle}</p>
-                  <div className="flex flex-wrap gap-1.5 pt-3">
-                    {p.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="text-[10px] uppercase tracking-wider border border-border rounded-full px-2.5 py-0.5 text-muted-foreground"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </motion.button>
-              ))}
-            </motion.div>
-
-            <p className="mt-4 text-xs text-muted-foreground tracking-wide">
-              Нажмите на карточку, чтобы узнать подробнее
-            </p>
+                <span className="text-xs font-mono text-muted-foreground tracking-widest">
+                  {p.id}
+                </span>
+                <h3 className="text-base font-bold leading-snug group-hover:text-accent transition-colors flex-1">
+                  {p.title}
+                </h3>
+                <p className="text-xs font-serif text-muted-foreground">{p.subtitle}</p>
+                <div className="flex flex-wrap gap-1.5 pt-3">
+                  {p.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="text-[10px] uppercase tracking-wider border border-border rounded-full px-2.5 py-0.5 text-muted-foreground"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </motion.button>
+            ))}
           </motion.div>
+
+          <p className="mt-4 text-xs text-muted-foreground tracking-wide">
+            Нажмите на карточку, чтобы узнать подробнее
+          </p>
         </section>
 
       </main>
@@ -420,7 +444,7 @@ export default function App() {
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-60px" }}
+          viewport={{ once: true, amount: 0.2 }}
           variants={stagger}
           className="max-w-6xl mx-auto px-6 py-28 flex flex-col md:flex-row md:items-end justify-between gap-12"
         >
