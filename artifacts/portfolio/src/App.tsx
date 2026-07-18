@@ -354,7 +354,7 @@ export default function App() {
                 Привет,
               </span>
               <span
-                className="block text-5xl md:text-7xl italic text-accent"
+                className="block text-5xl md:text-7xl text-accent"
                 style={{ fontFamily: "'Bodoni Moda', Georgia, serif" }}
               >
                 я Лия
