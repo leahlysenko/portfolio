@@ -61,36 +61,44 @@ const PROJECTS = [
     title: "Редизайн вводной программы о\u00a0креативных индустриях",
     audience: "Подростки, студенты 1-го курса",
     company: "МКТ",
-    description:
-      "Разработала систему адаптации для 200+ сотрудников крупной технологической компании. Проект включал анализ текущих процессов, проектирование нового пути сотрудника и создание учебных материалов.",
-    tags: ["Онбординг", "Образование", "HR"],
+    task: "Переосмыслить вводный курс «Введение в\u00a0креативные индустрии» для студентов 1-го курса (14–15 лет). Первый запуск прошёл хаотично и\u00a0без измеримых результатов. Нужно было создать систему, которая познакомит подростков с\u00a0миром креативных профессий и\u00a0даст опыт первых самостоятельных проектов.",
+    result: "5-недельная лаборатория креативных индустрий, где студенты проходят 10 творческих проб в\u00a0кино, маркетинге и\u00a0дизайне, формируя насмотренность и\u00a0создавая первое портфолио.",
+    decisions: [
+      "На брифинге стало ясно: первокурсникам тяжело в\u00a0строго лекционном формате, а\u00a0самостоятельно вести проекты без кураторства они пока не\u00a0умеют. Поэтому каждая проба идёт по\u00a0единому алгоритму — Разогрев\u00a0→ Теория\u00a0→ Практика\u00a0→ Презентация, — а\u00a0вся работа остаётся внутри занятия, без домашних заданий.",
+      "Подростки редко любят рефлексировать, но\u00a0именно это помогает закрепить насмотренность. Моя команда внедрила «Скетчбук креатора» — личное пространство для самовыражения, которое к\u00a0концу курса становится первым портфолио из\u00a0работ по\u00a0всем 10 пробам.",
+      "У\u00a0многих творческих профессий есть свои ритуалы, поэтому каждая проба начинается именно с\u00a0него — чтобы студенты с\u00a0первых минут могли проникнуться духом индустрии. Так, например, в\u00a0начале блока про кино студенты разбивают тарелку с\u00a0названием занятия, а\u00a0кусочки тарелки уносят домой на\u00a0память.",
+    ],
+    review: {
+      text: "«Спасибо, что провели исследования, которые мы\u00a0не\u00a0сделали сами. Очень мощная история про саморефлексию! Классная история со\u00a0скетчбуком. Сквозной инструмент для работы. Никто не\u00a0хочет рефлексировать в\u00a0конце занятия. Вы\u00a0нашли очень крутую форму — очень хочется эту форму дальше дорабатывать и\u00a0работать с\u00a0ней».",
+      author: "Константин Левушкин, академический директор МКТ",
+    },
   },
   {
     id: "02",
     title: "Разработка программы\nо\u00a0современной\nскульптуре",
     audience: "Художники, начинающие скульпторы",
     company: "MSCA",
-    description:
-      "Спроектировала корпоративную wiki с нуля: архитектура, навигация, контент. Внедрила процессы поддержания базы в актуальном состоянии и обучила команду работе с ней.",
-    tags: ["Wiki", "Управление знаниями"],
+    task: "",
+    result: "",
+    decisions: [],
   },
   {
     id: "03",
     title: "Telegram-бот для\u00a0тренировки навыков саморегуляции",
     audience: "Взрослая аудитория Казахстана",
     company: "NeuroForce",
-    description:
-      "Методологический дизайн и разработка контента для внутреннего обучения. Курс прошли 150+ сотрудников, NPS составил 82%.",
-    tags: ["Курс", "LXD"],
+    task: "",
+    result: "",
+    decisions: [],
   },
   {
     id: "04",
     title: "Построение системы обучения и\u00a0сертификации партнеров",
     audience: "IT-специалисты",
     company: "IT-вендор РФ",
-    description:
-      "Программа поддержки 15 коллег-специалистов: разборы, обратная связь, рост компетенций. Итогом стал рост удовлетворённости участников на 40%.",
-    tags: ["Менторинг", "Сообщество"],
+    task: "",
+    result: "",
+    decisions: [],
   },
 ];
 
@@ -169,33 +177,76 @@ function ProjectModal({
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, y: 16, scale: 0.98 }}
         transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
-        className="relative bg-background max-w-md w-full rounded-2xl p-8 md:p-10 shadow-2xl"
+        className="relative bg-background max-w-xl w-full rounded-2xl shadow-2xl max-h-[88vh] flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
-        <button
-          onClick={onClose}
-          className="absolute top-5 right-5 w-8 h-8 flex items-center justify-center rounded-full bg-secondary hover:bg-border transition-colors cursor-pointer"
-          aria-label="Закрыть"
-        >
-          <X className="w-4 h-4" />
-        </button>
-        <span className="text-[11px] font-mono text-muted-foreground tracking-[0.18em] uppercase mb-5 block">
-          {project.id}
-        </span>
-        <h3 className="text-2xl font-bold mb-1 leading-snug">{project.title}</h3>
-        <p className="text-sm text-muted-foreground mb-6">{project.company}</p>
-        <p className="text-base leading-relaxed font-sans text-foreground/80 mb-7">
-          {project.description}
-        </p>
-        <div className="flex flex-wrap gap-2">
-          {project.tags.map((tag) => (
-            <span
-              key={tag}
-              className="text-[11px] uppercase tracking-wider border border-border rounded-full px-3 py-1 text-muted-foreground"
-            >
-              {tag}
-            </span>
-          ))}
+        {/* Шапка — не скроллится */}
+        <div className="px-8 pt-8 md:px-10 md:pt-10 pb-5 border-b border-border shrink-0">
+          <button
+            onClick={onClose}
+            className="absolute top-5 right-5 w-8 h-8 flex items-center justify-center rounded-full bg-secondary hover:bg-border transition-colors cursor-pointer"
+            aria-label="Закрыть"
+          >
+            <X className="w-4 h-4" />
+          </button>
+          <span className="text-[11px] font-mono text-muted-foreground tracking-[0.18em] uppercase mb-4 block">
+            {project.id}
+          </span>
+          <h3 className="text-2xl font-bold mb-1 leading-snug whitespace-pre-line">{project.title}</h3>
+          <p className="text-sm text-muted-foreground">{project.company}</p>
+        </div>
+
+        {/* Тело — скроллится */}
+        <div className="overflow-y-auto px-8 py-7 md:px-10 flex flex-col gap-7">
+
+          {project.task && (
+            <div>
+              <p className="text-[11px] font-mono uppercase tracking-widest text-muted-foreground mb-2">
+                Задача
+              </p>
+              <p className="text-sm leading-relaxed text-foreground/80">{project.task}</p>
+            </div>
+          )}
+
+          {project.result && (
+            <div>
+              <p className="text-[11px] font-mono uppercase tracking-widest text-muted-foreground mb-2">
+                Что получилось в итоге
+              </p>
+              <p className="text-sm leading-relaxed text-foreground/80">{project.result}</p>
+            </div>
+          )}
+
+          {project.decisions.length > 0 && (
+            <div>
+              <p className="text-[11px] font-mono uppercase tracking-widest text-muted-foreground mb-3">
+                Ключевые решения
+              </p>
+              <ul className="flex flex-col gap-4">
+                {project.decisions.map((d, i) => (
+                  <li key={i} className="flex gap-3">
+                    <span className="text-[11px] font-mono text-muted-foreground mt-0.5 shrink-0">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <p className="text-sm leading-relaxed text-foreground/80">{d}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {project.review && (
+            <div className="border-t border-border pt-6">
+              <p className="text-[11px] font-mono uppercase tracking-widest text-muted-foreground mb-3">
+                Отзыв заказчика
+              </p>
+              <blockquote className="text-sm leading-relaxed text-foreground/80 italic mb-3">
+                {project.review.text}
+              </blockquote>
+              <p className="text-xs text-muted-foreground">— {project.review.author}</p>
+            </div>
+          )}
+
         </div>
       </motion.div>
     </motion.div>
