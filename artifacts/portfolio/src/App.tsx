@@ -1,234 +1,315 @@
-import { motion } from "framer-motion";
-import { ArrowUpRight, ArrowRight } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowRight, Plus, Minus } from "lucide-react";
 import { useState } from "react";
 
-const fadeUpVariant = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
-};
+// ─── ДАННЫЕ — редактируй здесь ────────────────────────────────────────────────
 
-const staggerContainer = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1
-    }
-  }
-};
+const NAME = "Твоё Имя";
+const ROLE = "Методист · Проектировщик образовательного опыта";
+const ABOUT_TEXT =
+  "Я проектирую системы обучения внутри компаний и помогаю командам выстраивать эффективные образовательные процессы. Работаю на стыке методологии, дизайна опыта и управления знаниями.";
+const TELEGRAM_LINK = "https://t.me/username"; // ← замени на свою ссылку
 
-const projects = [
+const FACTS = [
+  { stat: "5+", label: "лет в методологии" },
+  { stat: "20+", label: "завершённых проектов" },
+  { stat: "3", label: "направления работы" },
+  { stat: "100+", label: "обученных специалистов" },
+];
+
+const SERVICES = [
+  {
+    title: "Проектирование обучения",
+    desc: "Разработка программ, курсов и треков развития под задачи бизнеса",
+  },
+  {
+    title: "Управление знаниями",
+    desc: "Базы знаний, онбординг, корпоративные wiki и процессы передачи экспертизы",
+  },
+  {
+    title: "Поддержка методистов",
+    desc: "Консультации, разборы кейсов, ревью материалов для коллег-специалистов",
+  },
+];
+
+const PROJECTS = [
   {
     id: "01",
     title: "Онбординг-программа",
-    description: "Разработала систему адаптации для 200+ сотрудников",
-    tags: ["Onboarding", "EdTech", "Knowledge Base"]
+    description:
+      "Разработала систему адаптации для 200+ сотрудников крупной технологической компании.",
+    tags: ["Онбординг", "Образование", "HR"],
   },
   {
     id: "02",
     title: "База знаний",
-    description: "Спроектировала корпоративную wiki с нуля",
-    tags: ["Wiki", "Knowledge Management", "Notion"]
+    description:
+      "Спроектировала корпоративную wiki с нуля: архитектура, навигация, контент.",
+    tags: ["Wiki", "Управление знаниями"],
   },
   {
     id: "03",
     title: "Курс по управлению временем",
-    description: "Методологический дизайн и контент",
-    tags: ["Time Management", "LXD", "Course Design"]
+    description:
+      "Методологический дизайн и разработка контента для внутреннего обучения.",
+    tags: ["Курс", "LXD"],
   },
   {
     id: "04",
     title: "Менторинг методистов",
-    description: "Программа поддержки 15 коллег",
-    tags: ["Mentorship", "Community", "Leadership"]
-  }
+    description:
+      "Программа поддержки 15 коллег-специалистов: разборы, обратная связь, рост.",
+    tags: ["Менторинг", "Сообщество"],
+  },
 ];
 
-export default function App() {
-  const [openProject, setOpenProject] = useState<string | null>("01");
+// ──────────────────────────────────────────────────────────────────────────────
 
+const fadeUp = {
+  hidden: { opacity: 0, y: 28 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] } },
+};
+
+const stagger = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.1 } },
+};
+
+function ProjectCard({ project }: { project: (typeof PROJECTS)[0] }) {
+  const [open, setOpen] = useState(false);
   return (
-    <div className="min-h-[100dvh] bg-background text-foreground font-sans selection:bg-accent selection:text-accent-foreground">
-      {/* Navigation */}
-      <nav className="sticky top-0 z-50 bg-background border-b border-border">
-        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <div className="font-bold tracking-widest uppercase text-sm">
-            Королева
-          </div>
-          <div className="hidden md:flex items-center gap-8 text-sm font-medium uppercase tracking-wider">
-            <a href="#about" className="hover:text-accent transition-colors">Обо мне</a>
-            <a href="#services" className="hover:text-accent transition-colors">Услуги</a>
-            <a href="#projects" className="hover:text-accent transition-colors">Проекты</a>
-            <a href="#contact" className="hover:text-accent transition-colors">Контакты</a>
+    <div className="border border-border rounded-none flex flex-col">
+      <button
+        onClick={() => setOpen((v) => !v)}
+        className="flex items-start justify-between gap-4 p-6 text-left w-full group cursor-pointer"
+      >
+        <div>
+          <span className="block text-xs text-muted-foreground font-mono mb-3 tracking-widest">
+            {project.id}
+          </span>
+          <span className="block text-xl font-bold leading-snug group-hover:text-accent transition-colors">
+            {project.title}
+          </span>
+        </div>
+        <span className="mt-1 shrink-0 text-muted-foreground">
+          {open ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
+        </span>
+      </button>
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            key="content"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className="overflow-hidden"
+          >
+            <div className="px-6 pb-6 border-t border-border pt-4">
+              <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+                {project.description}
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {project.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="text-[10px] uppercase tracking-wider border border-border px-2.5 py-1 text-muted-foreground"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+export default function App() {
+  return (
+    <div className="min-h-screen bg-background text-foreground font-sans">
+
+      {/* NAV */}
+      <nav className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
+        <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
+          <span className="text-xs font-bold tracking-[0.2em] uppercase">{NAME}</span>
+          <div className="hidden md:flex items-center gap-8 text-xs tracking-[0.15em] uppercase text-muted-foreground">
+            <a href="#about" className="hover:text-foreground transition-colors">Обо мне</a>
+            <a href="#services" className="hover:text-foreground transition-colors">Услуги</a>
+            <a href="#projects" className="hover:text-foreground transition-colors">Проекты</a>
+            <a href="#contact" className="hover:text-foreground transition-colors">Контакты</a>
           </div>
         </div>
       </nav>
 
-      <main>
-        {/* Hero */}
-        <section className="border-b border-border">
-          <div className="max-w-7xl mx-auto flex flex-col md:flex-row min-h-[calc(100vh-4rem)]">
-            <div className="flex-1 p-6 md:p-12 lg:p-20 flex flex-col justify-center border-b md:border-b-0 md:border-r border-border">
-              <motion.div initial="hidden" animate="visible" variants={staggerContainer}>
-                <motion.h1 variants={fadeUpVariant} className="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight leading-[1.1] mb-6">
-                  Елена<br />Королева
-                </motion.h1>
-                <motion.p variants={fadeUpVariant} className="text-xl md:text-2xl text-muted-foreground font-light max-w-md">
-                  Методист &middot; Проектировщик образовательного опыта
-                </motion.p>
-              </motion.div>
-            </div>
-            <div className="flex-1 p-6 md:p-12 lg:p-20 flex items-center justify-center bg-secondary/30 relative">
-              <motion.div 
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-                className="w-full aspect-[3/4] max-w-md bg-border/30 rounded-sm flex items-center justify-center relative overflow-hidden"
-              >
-                <span className="text-sm tracking-widest uppercase text-muted-foreground font-medium">Ваше фото</span>
-              </motion.div>
-            </div>
-          </div>
-        </section>
+      <main className="max-w-6xl mx-auto px-6">
 
-        {/* 4 Facts */}
-        <section className="border-b border-border">
-          <motion.div 
-            initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={staggerContainer}
-            className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4"
+        {/* HERO */}
+        <section className="pt-20 pb-24 grid grid-cols-1 md:grid-cols-[1fr_auto_auto] gap-12 items-start">
+
+          {/* Left: name + photo */}
+          <motion.div initial="hidden" animate="visible" variants={stagger}>
+            <motion.p variants={fadeUp} className="text-xs tracking-[0.2em] uppercase text-muted-foreground mb-6">
+              Привет, я
+            </motion.p>
+            <motion.h1
+              variants={fadeUp}
+              className="text-6xl md:text-8xl font-extrabold leading-[1.0] tracking-tight mb-8"
+            >
+              {NAME.split(" ").map((word, i) => (
+                <span key={i} className="block">{word}</span>
+              ))}
+            </motion.h1>
+            <motion.p variants={fadeUp} className="text-base text-muted-foreground max-w-xs leading-relaxed mb-10">
+              {ROLE}
+            </motion.p>
+            <motion.a
+              variants={fadeUp}
+              href={TELEGRAM_LINK}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-foreground text-background text-xs font-bold uppercase tracking-widest px-6 py-3 hover:bg-accent hover:text-accent-foreground transition-colors"
+            >
+              Написать мне <ArrowRight className="w-3.5 h-3.5" />
+            </motion.a>
+          </motion.div>
+
+          {/* Center: photo */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+            className="w-52 md:w-64 aspect-[3/4] bg-secondary flex items-center justify-center shrink-0"
           >
-            {[
-              { stat: "5+ лет", label: "в методологии" },
-              { stat: "20+", label: "проектов" },
-              { stat: "3", label: "направления" },
-              { stat: "100+", label: "обученных специалистов" }
-            ].map((fact, i) => (
-              <motion.div key={i} variants={fadeUpVariant} className="p-8 md:p-12 border-b md:border-b-0 md:border-r border-border last:border-r-0 odd:border-r md:odd:border-r-0 [&:nth-child(2)]:border-r-0 md:[&:nth-child(2)]:border-r">
-                <div className="text-3xl md:text-4xl font-bold mb-2">{fact.stat}</div>
-                <div className="text-xs md:text-sm text-muted-foreground uppercase tracking-wider">{fact.label}</div>
+            {/* ЗАМЕНИ IMG: раскомментируй строку ниже и укажи путь к своему фото */}
+            {/* <img src="/photo.jpg" alt="Фото" className="w-full h-full object-cover" /> */}
+            <span className="text-xs tracking-widest uppercase text-muted-foreground">Ваше фото</span>
+          </motion.div>
+
+          {/* Right: stats */}
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={stagger}
+            className="flex flex-col gap-8 pt-2"
+          >
+            {FACTS.map((f, i) => (
+              <motion.div key={i} variants={fadeUp} className="text-right">
+                <div className="text-4xl font-extrabold leading-none">{f.stat}</div>
+                <div className="text-[10px] uppercase tracking-widest text-muted-foreground mt-1 max-w-[100px] ml-auto leading-tight">
+                  {f.label}
+                </div>
               </motion.div>
             ))}
           </motion.div>
         </section>
 
-        {/* About */}
-        <section id="about" className="border-b border-border scroll-m-16">
-          <div className="max-w-7xl mx-auto flex flex-col md:flex-row">
-            <div className="w-full md:w-1/3 p-6 md:p-12 lg:p-20 border-b md:border-b-0 md:border-r border-border flex items-start">
-              <h2 className="text-sm font-bold tracking-widest uppercase mt-2">Обо мне</h2>
-            </div>
-            <div className="w-full md:w-2/3 p-6 md:p-12 lg:p-20">
-              <motion.p 
-                initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={fadeUpVariant}
-                className="text-2xl md:text-4xl font-light leading-relaxed md:leading-relaxed max-w-3xl"
-              >
-                Я проектирую системы обучения внутри компаний и помогаю командам выстраивать эффективные образовательные процессы. Работаю на стыке методологии, дизайна опыта и управления знаниями.
-              </motion.p>
-            </div>
-          </div>
+        {/* ABOUT */}
+        <section id="about" className="py-24 scroll-mt-16 border-t border-border">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-80px" }}
+            variants={stagger}
+          >
+            <motion.h2 variants={fadeUp} className="text-5xl md:text-7xl font-extrabold uppercase leading-none mb-12">
+              Обо мне
+            </motion.h2>
+            <motion.p
+              variants={fadeUp}
+              className="text-xl md:text-2xl font-light leading-relaxed max-w-3xl text-muted-foreground"
+            >
+              {ABOUT_TEXT}
+            </motion.p>
+          </motion.div>
         </section>
 
-        {/* Services */}
-        <section id="services" className="border-b border-border scroll-m-16">
-          <div className="max-w-7xl mx-auto flex flex-col">
-            <div className="p-6 md:p-12 lg:p-20 border-b border-border">
-              <h2 className="text-sm font-bold tracking-widest uppercase">С чем могу помочь</h2>
-            </div>
-            <motion.div 
-              initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={staggerContainer}
-              className="grid grid-cols-1 md:grid-cols-3"
-            >
-              {[
-                { title: "Проектирование обучения", desc: "Разработка программ, курсов и треков развития под задачи бизнеса" },
-                { title: "Системы управления знаниями", desc: "Базы знаний, онбординг, корпоративные wiki и процессы передачи экспертизы" },
-                { title: "Поддержка методистов", desc: "Консультации, разборы кейсов, ревью материалов для коллег-специалистов" }
-              ].map((service, i) => (
-                <motion.div key={i} variants={fadeUpVariant} className="p-8 md:p-12 lg:p-20 border-b md:border-b-0 md:border-r border-border last:border-b-0 md:last:border-r-0">
-                  <h3 className="text-xl md:text-2xl font-bold mb-4">{service.title}</h3>
-                  <p className="text-muted-foreground leading-relaxed">{service.desc}</p>
+        {/* SERVICES */}
+        <section id="services" className="py-24 scroll-mt-16 border-t border-border">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-80px" }}
+            variants={stagger}
+          >
+            <motion.h2 variants={fadeUp} className="text-5xl md:text-7xl font-extrabold uppercase leading-none mb-16">
+              С чем могу<br />помочь
+            </motion.h2>
+            <motion.div variants={stagger} className="grid grid-cols-1 md:grid-cols-3 gap-12">
+              {SERVICES.map((s, i) => (
+                <motion.div key={i} variants={fadeUp}>
+                  <span className="block text-xs text-muted-foreground font-mono mb-4 tracking-widest">0{i + 1}</span>
+                  <h3 className="text-xl font-bold mb-3">{s.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
                 </motion.div>
               ))}
             </motion.div>
-          </div>
+          </motion.div>
         </section>
 
-        {/* Projects */}
-        <section id="projects" className="border-b border-border scroll-m-16">
-          <div className="max-w-7xl mx-auto flex flex-col md:flex-row">
-            <div className="w-full md:w-1/3 p-6 md:p-12 lg:p-20 border-b md:border-b-0 md:border-r border-border flex items-start">
-              <h2 className="text-sm font-bold tracking-widest uppercase mt-2">Мои проекты</h2>
-            </div>
-            <div className="w-full md:w-2/3 flex flex-col">
-              {projects.map((project) => (
-                <div 
-                  key={project.id} 
-                  className={`border-b border-border last:border-b-0 flex flex-col transition-colors duration-300 ${openProject === project.id ? 'bg-secondary/20' : 'hover:bg-secondary/10'}`}
-                >
-                  <button 
-                    onClick={() => setOpenProject(openProject === project.id ? null : project.id)}
-                    className="w-full text-left p-6 md:p-12 flex items-center justify-between focus:outline-none cursor-pointer"
-                  >
-                    <div className="flex items-center gap-6 md:gap-12">
-                      <span className="text-sm md:text-base text-muted-foreground font-mono">{project.id}</span>
-                      <span className="text-xl md:text-3xl font-bold">{project.title}</span>
-                    </div>
-                    <motion.div 
-                      animate={{ rotate: openProject === project.id ? 45 : 0 }}
-                      transition={{ duration: 0.3, ease: "easeInOut" }}
-                    >
-                      <ArrowUpRight className="w-6 h-6 text-muted-foreground" />
-                    </motion.div>
-                  </button>
-                  <motion.div 
-                    initial={false}
-                    animate={{ height: openProject === project.id ? "auto" : 0, opacity: openProject === project.id ? 1 : 0 }}
-                    transition={{ duration: 0.3, ease: "easeInOut" }}
-                    className="overflow-hidden px-6 md:px-12"
-                  >
-                    <div className="pb-8 md:pb-12 max-w-2xl ml-[3.25rem] md:ml-[4.5rem]">
-                      <p className="text-lg text-muted-foreground mb-6">{project.description}</p>
-                      <div className="flex flex-wrap gap-2">
-                        {project.tags.map(tag => (
-                          <span key={tag} className="text-xs uppercase tracking-wider border border-border px-3 py-1 rounded-full text-muted-foreground">
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </motion.div>
-                </div>
+        {/* PROJECTS */}
+        <section id="projects" className="py-24 scroll-mt-16 border-t border-border">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-80px" }}
+            variants={stagger}
+          >
+            <motion.h2 variants={fadeUp} className="text-5xl md:text-7xl font-extrabold uppercase leading-none mb-16">
+              Мои проекты
+            </motion.h2>
+            <motion.div
+              variants={stagger}
+              className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4"
+            >
+              {PROJECTS.map((p) => (
+                <motion.div key={p.id} variants={fadeUp}>
+                  <ProjectCard project={p} />
+                </motion.div>
               ))}
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </section>
 
-        {/* CTA */}
-        <section id="contact" className="bg-secondary/30 scroll-m-16">
-          <div className="max-w-7xl mx-auto p-12 md:p-24 lg:p-32 text-center flex flex-col items-center justify-center">
-            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={staggerContainer}>
-              <motion.h2 variants={fadeUpVariant} className="text-4xl md:text-6xl font-extrabold mb-6">Давайте поговорим</motion.h2>
-              <motion.p variants={fadeUpVariant} className="text-lg md:text-xl text-muted-foreground max-w-xl mx-auto mb-12">
-                Напишите мне в Telegram — расскажу подробнее о своём опыте и обсудим вашу задачу.
-              </motion.p>
-              <motion.a 
-                variants={fadeUpVariant}
-                href="https://t.me/username" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-3 bg-primary text-primary-foreground px-8 py-5 text-sm font-bold uppercase tracking-widest hover:bg-accent hover:text-accent-foreground transition-all rounded-none group"
-              >
-                Написать в Telegram
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </motion.a>
-            </motion.div>
-          </div>
-        </section>
       </main>
 
-      <footer className="border-t border-border bg-background">
-        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between text-xs text-muted-foreground font-medium uppercase tracking-widest">
-          <div>&copy; {new Date().getFullYear()} Елена Королева</div>
-          <div className="hidden md:block">LXD Portfolio</div>
+      {/* CTA */}
+      <section id="contact" className="scroll-mt-16 mt-8 border-t border-border bg-secondary/40">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={stagger}
+          className="max-w-6xl mx-auto px-6 py-28 flex flex-col md:flex-row md:items-end justify-between gap-12"
+        >
+          <motion.h2
+            variants={fadeUp}
+            className="text-5xl md:text-7xl font-extrabold uppercase leading-none"
+          >
+            Давайте<br />поговорим
+          </motion.h2>
+          <motion.div variants={fadeUp} className="flex flex-col gap-6 md:items-end">
+            <p className="text-sm text-muted-foreground max-w-xs md:text-right leading-relaxed">
+              Напишите мне в Telegram — расскажу подробнее о своём опыте и обсудим вашу задачу.
+            </p>
+            <a
+              href={TELEGRAM_LINK}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-3 bg-foreground text-background text-xs font-bold uppercase tracking-widest px-8 py-4 hover:bg-accent hover:text-accent-foreground transition-colors self-start md:self-auto"
+            >
+              Написать в Telegram <ArrowRight className="w-3.5 h-3.5" />
+            </a>
+          </motion.div>
+        </motion.div>
+      </section>
+
+      <footer className="border-t border-border">
+        <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between text-[10px] text-muted-foreground uppercase tracking-widest">
+          <span>&copy; {new Date().getFullYear()} {NAME}</span>
+          <span>Portfolio</span>
         </div>
       </footer>
     </div>
