@@ -350,11 +350,8 @@ export default function App() {
             className="relative z-10 pr-0 translate-x-10"
           >
             <motion.h1 variants={fadeUp} className="leading-[1.02] tracking-tight mb-5">
-              <span className="block text-4xl md:text-6xl font-sans font-normal">
-                Привет,
-              </span>
-              <span className="block text-6xl md:text-8xl text-accent" style={{ fontFamily: "'Cinzel Decorative', serif", fontWeight: 700 }}>
-                я Лия
+              <span className="block text-5xl md:text-6xl whitespace-nowrap" style={{ fontFamily: "'Cormorant', serif", fontWeight: 700 }}>
+                Привет, <span className="text-accent">я Лия</span>
               </span>
             </motion.h1>
             <motion.p
