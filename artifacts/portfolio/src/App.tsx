@@ -42,7 +42,7 @@ const SERVICES = [
     ],
   },
   {
-    title: "Стать опорой и поддержкой, если вы коллега по цеху",
+    title: "Стать опорой и поддержкой,\nесли вы коллега по цеху",
     items: [
       "Проконсультирую и дам второе мнение, как можно решить вашу текущую задачу, поделюсь своим опытом",
       "Поддержу, если вы в начале своего пути и чувствуете неуверенность в своих шагах",
@@ -356,7 +356,7 @@ export default function App() {
                     <span className="text-[10px] text-foreground/40 font-mono tracking-widest">
                       0{i + 1}
                     </span>
-                    <h3 className="text-base font-bold leading-snug">{nb(s.title)}</h3>
+                    <h3 className="text-base font-bold leading-snug whitespace-pre-line">{nb(s.title)}</h3>
                     <ul className="flex flex-col gap-2">
                       {s.items.map((item, j) => (
                         <li
