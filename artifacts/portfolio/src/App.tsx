@@ -53,7 +53,7 @@ const SERVICES = [
 ];
 
 const PROJECTS_SUBTITLE =
-  "Больше о\u00a0моём опыте и\u00a0образовании можно узнать из\u00a0резюме. Его я\u00a0предоставлю по\u00a0запросу.";
+  "Больше о\u00a0моём опыте и\u00a0образовании можно узнать из\u00a0резюме.\nЕго я\u00a0предоставлю по\u00a0запросу.";
 
 const PROJECTS = [
   {
@@ -499,7 +499,7 @@ export default function App() {
             <h2 className="text-3xl md:text-5xl font-bold uppercase leading-none">
               Мои проекты
             </h2>
-            <p className="text-base font-sans leading-relaxed text-muted-foreground">
+            <p className="text-base font-sans leading-relaxed text-muted-foreground whitespace-pre-line">
               {PROJECTS_SUBTITLE}
             </p>
           </div>
