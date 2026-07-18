@@ -4,17 +4,18 @@ import { useState } from "react";
 
 // ─── ДАННЫЕ — редактируй здесь ────────────────────────────────────────────────
 
-const NAME = "Твоё Имя";
+const NAME = "Лия Лысенко";
 const ROLE = "Методист · Проектировщик образовательного опыта";
 const ABOUT_TEXT =
   "Я проектирую системы обучения внутри компаний и помогаю командам выстраивать эффективные образовательные процессы. Работаю на стыке методологии, дизайна опыта и управления знаниями.";
 const TELEGRAM_LINK = "https://telegram.me/leahlysenko";
 
+// 4 текстовых факта под фото
 const FACTS = [
-  { stat: "5+", label: "лет в методологии" },
-  { stat: "20+", label: "завершённых проектов" },
-  { stat: "3", label: "направления работы" },
-  { stat: "100+", label: "обученных специалистов" },
+  "Выпускница CG Education и School of Education",
+  "Проектирую обучение для взрослых и подростков в IT, нейротехе и креативных индустриях",
+  "Веду проекты от брифа до запуска и анализа результатов",
+  "Помогаю коллегам в решении их методических задач",
 ];
 
 const SERVICES_SUBTITLE =
@@ -49,6 +50,9 @@ const SERVICES = [
     ],
   },
 ];
+
+const PROJECTS_SUBTITLE =
+  "При создании образовательного продукта я могу подключиться как к отдельному блоку работ, так и более комплексно, взяв на себя организацию процесса и лидирование методической команды.";
 
 const PROJECTS = [
   {
@@ -115,7 +119,12 @@ function PillButton({
       ? "bg-foreground text-background hover:bg-accent hover:text-accent-foreground"
       : "border border-foreground/30 text-foreground hover:bg-foreground hover:text-background";
   return (
-    <a href={href} target="_blank" rel="noopener noreferrer" className={`${base} ${styles} ${className}`}>
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`${base} ${styles} ${className}`}
+    >
       {children}
     </a>
   );
@@ -159,7 +168,9 @@ function ProjectModal({
         </span>
         <h3 className="text-2xl font-bold mb-1 leading-snug">{project.title}</h3>
         <p className="text-sm text-muted-foreground mb-6">{project.subtitle}</p>
-        <p className="text-base leading-relaxed text-foreground/80 mb-7">{project.description}</p>
+        <p className="text-base leading-relaxed font-serif text-foreground/80 mb-7">
+          {project.description}
+        </p>
         <div className="flex flex-wrap gap-2">
           {project.tags.map((tag) => (
             <span
@@ -197,40 +208,35 @@ export default function App() {
       <main className="max-w-6xl mx-auto px-6">
 
         {/* ── HERO ── */}
-        <section className="pt-16 pb-12 grid grid-cols-[1fr_auto] gap-10 md:gap-16 items-center">
+        <section className="pt-16 pb-12 grid grid-cols-[1fr_1fr] gap-8 md:gap-12 items-center">
 
-          {/* Left: name + role */}
+          {/* Left: greeting + role */}
           <motion.div initial="hidden" animate="visible" variants={stagger}>
-            <motion.p
-              variants={fadeUp}
-              className="text-xs tracking-[0.22em] uppercase text-muted-foreground mb-5"
-            >
-              Привет, я
-            </motion.p>
-            <motion.h1
-              variants={fadeUp}
-              className="text-5xl md:text-7xl font-bold leading-[1.02] tracking-tight mb-5"
-            >
-              {NAME.split(" ").map((word, i) => (
-                <span key={i} className="block">{word}</span>
-              ))}
+            {/* Two-line headline: bold grotesque + serif italic — like ref 1 */}
+            <motion.h1 variants={fadeUp} className="leading-[1.0] tracking-tight mb-6">
+              <span className="block text-5xl md:text-7xl font-bold font-sans">
+                Привет,
+              </span>
+              <span className="block text-5xl md:text-7xl font-serif italic text-accent">
+                я Лия
+              </span>
             </motion.h1>
             <motion.p
               variants={fadeUp}
-              className="text-base text-muted-foreground leading-relaxed max-w-sm"
+              className="text-base font-serif leading-relaxed text-muted-foreground max-w-sm"
             >
               {ROLE}
             </motion.p>
           </motion.div>
 
-          {/* Right: photo — arch shape (rounded bottom) */}
+          {/* Right: photo — arch shape (rounded bottom), bigger + centered */}
           <motion.div
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
-            className="shrink-0 overflow-hidden bg-secondary"
+            className="overflow-hidden bg-secondary mx-auto"
             style={{
-              width: "clamp(180px, 22vw, 300px)",
+              width: "min(340px, 90%)",
               aspectRatio: "3 / 4",
               borderRadius: "0 0 9999px 9999px",
             }}
@@ -241,7 +247,9 @@ export default function App() {
               <img src="/photo.jpg" alt="Фото" className="w-full h-full object-cover object-top" />
             */}
             <div className="w-full h-full flex items-center justify-center">
-              <span className="text-[11px] tracking-widest uppercase text-muted-foreground">Ваше фото</span>
+              <span className="text-[11px] tracking-widest uppercase text-muted-foreground">
+                Ваше фото
+              </span>
             </div>
           </motion.div>
         </section>
@@ -253,14 +261,14 @@ export default function App() {
             whileInView="visible"
             viewport={{ once: true }}
             variants={stagger}
-            className="grid grid-cols-2 md:grid-cols-4 gap-8"
+            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8"
           >
-            {FACTS.map((f, i) => (
-              <motion.div key={i} variants={fadeUp} className="flex flex-col gap-2">
-                <div className="text-3xl md:text-4xl font-bold">{f.stat}</div>
-                <div className="text-xs uppercase tracking-wider text-muted-foreground leading-tight">
-                  {f.label}
-                </div>
+            {FACTS.map((text, i) => (
+              <motion.div key={i} variants={fadeUp} className="flex flex-col gap-3">
+                <span className="text-xs font-mono text-muted-foreground tracking-widest">
+                  0{i + 1}
+                </span>
+                <p className="text-sm font-serif leading-snug text-foreground/80">{text}</p>
               </motion.div>
             ))}
           </motion.div>
@@ -283,7 +291,7 @@ export default function App() {
             </motion.h2>
             <motion.p
               variants={fadeUp}
-              className="text-lg md:text-xl leading-relaxed text-muted-foreground"
+              className="text-lg md:text-xl font-serif leading-relaxed text-muted-foreground"
             >
               {ABOUT_TEXT}
             </motion.p>
@@ -298,7 +306,7 @@ export default function App() {
             viewport={{ once: true, margin: "-60px" }}
             variants={stagger}
           >
-            {/* Heading row */}
+            {/* Heading + subtitle — unified with the columns below, no inner separator */}
             <div className="grid grid-cols-1 md:grid-cols-[2fr_3fr] gap-12 mb-14">
               <motion.h2
                 variants={fadeUp}
@@ -306,15 +314,18 @@ export default function App() {
               >
                 С чем могу<br />помочь
               </motion.h2>
-              <motion.p variants={fadeUp} className="text-base leading-relaxed text-muted-foreground">
+              <motion.p
+                variants={fadeUp}
+                className="text-base font-serif leading-relaxed text-muted-foreground"
+              >
                 {SERVICES_SUBTITLE}
               </motion.p>
             </div>
 
-            {/* Columns */}
+            {/* Three columns — no border-t, visually one block with the header above */}
             <motion.div
               variants={stagger}
-              className="grid grid-cols-1 md:grid-cols-3 gap-10 pt-10 border-t border-border"
+              className="grid grid-cols-1 md:grid-cols-3 gap-10"
             >
               {SERVICES.map((s, i) => (
                 <motion.div key={i} variants={fadeUp}>
@@ -326,7 +337,7 @@ export default function App() {
                     {s.items.map((item, j) => (
                       <li
                         key={j}
-                        className="flex items-start gap-2.5 text-sm text-muted-foreground leading-snug"
+                        className="flex items-start gap-2.5 text-sm font-serif text-muted-foreground leading-snug"
                       >
                         <span className="mt-[5px] w-1.5 h-1.5 rounded-full bg-accent shrink-0" />
                         {item}
@@ -347,12 +358,21 @@ export default function App() {
             viewport={{ once: true, margin: "-60px" }}
             variants={stagger}
           >
-            <motion.h2
-              variants={fadeUp}
-              className="text-3xl md:text-5xl font-bold uppercase leading-none mb-12"
-            >
-              Мои проекты
-            </motion.h2>
+            {/* Heading row */}
+            <div className="grid grid-cols-1 md:grid-cols-[2fr_3fr] gap-12 mb-12">
+              <motion.h2
+                variants={fadeUp}
+                className="text-3xl md:text-5xl font-bold uppercase leading-none"
+              >
+                Мои проекты
+              </motion.h2>
+              <motion.p
+                variants={fadeUp}
+                className="text-base font-serif leading-relaxed text-muted-foreground"
+              >
+                {PROJECTS_SUBTITLE}
+              </motion.p>
+            </div>
 
             <motion.div
               variants={stagger}
@@ -372,7 +392,7 @@ export default function App() {
                   <h3 className="text-base font-bold leading-snug group-hover:text-accent transition-colors flex-1">
                     {p.title}
                   </h3>
-                  <p className="text-xs text-muted-foreground">{p.subtitle}</p>
+                  <p className="text-xs font-serif text-muted-foreground">{p.subtitle}</p>
                   <div className="flex flex-wrap gap-1.5 pt-3">
                     {p.tags.map((tag) => (
                       <span
@@ -388,7 +408,7 @@ export default function App() {
             </motion.div>
 
             <p className="mt-4 text-xs text-muted-foreground tracking-wide">
-              Нажми на карточку, чтобы узнать подробнее
+              Нажмите на карточку, чтобы узнать подробнее
             </p>
           </motion.div>
         </section>
@@ -411,7 +431,7 @@ export default function App() {
             Давайте<br />знакомиться
           </motion.h2>
           <motion.div variants={fadeUp} className="flex flex-col gap-5 md:items-end">
-            <p className="text-base text-muted-foreground max-w-xs md:text-right leading-relaxed">
+            <p className="text-base font-serif text-muted-foreground max-w-xs md:text-right leading-relaxed">
               Я всегда рада новым знакомствам и обмену опытом, смело пишите мне
             </p>
             <PillButton href={TELEGRAM_LINK} className="self-start md:self-auto">
