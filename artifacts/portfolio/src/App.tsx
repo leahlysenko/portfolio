@@ -353,10 +353,7 @@ export default function App() {
               <span className="block text-5xl md:text-7xl font-bold font-sans">
                 Привет,
               </span>
-              <span
-                className="block text-5xl md:text-7xl text-accent"
-                style={{ fontFamily: "'Bodoni Moda', Georgia, serif" }}
-              >
+              <span className="block text-5xl md:text-7xl font-bold font-sans text-accent">
                 я Лия
               </span>
             </motion.h1>
