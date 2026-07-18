@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, Plus, Minus } from "lucide-react";
+import { X, ArrowRight } from "lucide-react";
 import { useState } from "react";
 
 // ─── ДАННЫЕ — редактируй здесь ────────────────────────────────────────────────
@@ -8,7 +8,7 @@ const NAME = "Твоё Имя";
 const ROLE = "Методист · Проектировщик образовательного опыта";
 const ABOUT_TEXT =
   "Я проектирую системы обучения внутри компаний и помогаю командам выстраивать эффективные образовательные процессы. Работаю на стыке методологии, дизайна опыта и управления знаниями.";
-const TELEGRAM_LINK = "https://t.me/username"; // ← замени на свою ссылку
+const TELEGRAM_LINK = "https://telegram.me/leahlysenko";
 
 const FACTS = [
   { stat: "5+", label: "лет в методологии" },
@@ -17,18 +17,36 @@ const FACTS = [
   { stat: "100+", label: "обученных специалистов" },
 ];
 
+const SERVICES_SUBTITLE =
+  "При создании образовательного продукта я могу подключиться как к отдельному блоку работ, так и более комплексно, взяв на себя организацию процесса и лидирование методической команды.";
+
 const SERVICES = [
   {
     title: "Проектирование обучения",
-    desc: "Разработка программ, курсов и треков развития под задачи бизнеса",
+    items: [
+      "Анализ целевой аудитории",
+      "Разработка учебных программ",
+      "Проектирование курсов и треков",
+      "Методологическое сопровождение",
+    ],
   },
   {
     title: "Управление знаниями",
-    desc: "Базы знаний, онбординг, корпоративные wiki и процессы передачи экспертизы",
+    items: [
+      "Базы знаний и корпоративные wiki",
+      "Онбординг-программы",
+      "Процессы передачи экспертизы",
+      "Архитектура информации",
+    ],
   },
   {
     title: "Поддержка методистов",
-    desc: "Консультации, разборы кейсов, ревью материалов для коллег-специалистов",
+    items: [
+      "Консультации и разборы кейсов",
+      "Ревью учебных материалов",
+      "Менторинг специалистов",
+      "Лидирование методической команды",
+    ],
   },
 ];
 
@@ -36,29 +54,33 @@ const PROJECTS = [
   {
     id: "01",
     title: "Онбординг-программа",
+    subtitle: "Технологическая компания",
     description:
-      "Разработала систему адаптации для 200+ сотрудников крупной технологической компании.",
+      "Разработала систему адаптации для 200+ сотрудников крупной технологической компании. Проект включал анализ текущих процессов, проектирование нового пути сотрудника и создание учебных материалов.",
     tags: ["Онбординг", "Образование", "HR"],
   },
   {
     id: "02",
     title: "База знаний",
+    subtitle: "EdTech-платформа",
     description:
-      "Спроектировала корпоративную wiki с нуля: архитектура, навигация, контент.",
+      "Спроектировала корпоративную wiki с нуля: архитектура, навигация, контент. Внедрила процессы поддержания базы в актуальном состоянии и обучила команду работе с ней.",
     tags: ["Wiki", "Управление знаниями"],
   },
   {
     id: "03",
     title: "Курс по управлению временем",
+    subtitle: "Внутреннее обучение",
     description:
-      "Методологический дизайн и разработка контента для внутреннего обучения.",
+      "Методологический дизайн и разработка контента для внутреннего обучения. Курс прошли 150+ сотрудников, NPS составил 82%.",
     tags: ["Курс", "LXD"],
   },
   {
     id: "04",
     title: "Менторинг методистов",
+    subtitle: "Профессиональное сообщество",
     description:
-      "Программа поддержки 15 коллег-специалистов: разборы, обратная связь, рост.",
+      "Программа поддержки 15 коллег-специалистов: разборы, обратная связь, рост компетенций. Итогом стал рост удовлетворённости участников на 40%.",
     tags: ["Менторинг", "Сообщество"],
   },
 ];
@@ -66,139 +88,177 @@ const PROJECTS = [
 // ──────────────────────────────────────────────────────────────────────────────
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 28 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] } },
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
 };
 
 const stagger = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.1 } },
+  visible: { transition: { staggerChildren: 0.09 } },
 };
 
-function ProjectCard({ project }: { project: (typeof PROJECTS)[0] }) {
-  const [open, setOpen] = useState(false);
+function PillButton({
+  href,
+  children,
+  variant = "dark",
+  className = "",
+}: {
+  href: string;
+  children: React.ReactNode;
+  variant?: "dark" | "outline";
+  className?: string;
+}) {
+  const base =
+    "inline-flex items-center gap-2 rounded-full text-sm font-semibold px-6 py-2.5 transition-all duration-200 cursor-pointer whitespace-nowrap";
+  const styles =
+    variant === "dark"
+      ? "bg-foreground text-background hover:bg-accent hover:text-accent-foreground"
+      : "border border-foreground/30 text-foreground hover:bg-foreground hover:text-background";
   return (
-    <div className="border border-border rounded-none flex flex-col">
-      <button
-        onClick={() => setOpen((v) => !v)}
-        className="flex items-start justify-between gap-4 p-6 text-left w-full group cursor-pointer"
+    <a href={href} target="_blank" rel="noopener noreferrer" className={`${base} ${styles} ${className}`}>
+      {children}
+    </a>
+  );
+}
+
+function ProjectModal({
+  project,
+  onClose,
+}: {
+  project: (typeof PROJECTS)[0];
+  onClose: () => void;
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.2 }}
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-10"
+      onClick={onClose}
+    >
+      <div className="absolute inset-0 bg-foreground/50 backdrop-blur-sm" />
+      <motion.div
+        initial={{ opacity: 0, y: 32, scale: 0.97 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        exit={{ opacity: 0, y: 16, scale: 0.98 }}
+        transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+        className="relative bg-background max-w-md w-full rounded-2xl p-8 md:p-10 shadow-2xl"
+        onClick={(e) => e.stopPropagation()}
       >
-        <div>
-          <span className="block text-xs text-muted-foreground font-mono mb-3 tracking-widest">
-            {project.id}
-          </span>
-          <span className="block text-xl font-bold leading-snug group-hover:text-accent transition-colors">
-            {project.title}
-          </span>
-        </div>
-        <span className="mt-1 shrink-0 text-muted-foreground">
-          {open ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
+        <button
+          onClick={onClose}
+          className="absolute top-5 right-5 w-8 h-8 flex items-center justify-center rounded-full bg-secondary hover:bg-border transition-colors cursor-pointer"
+          aria-label="Закрыть"
+        >
+          <X className="w-4 h-4" />
+        </button>
+
+        <span className="text-[11px] font-mono text-muted-foreground tracking-[0.18em] uppercase mb-5 block">
+          {project.id}
         </span>
-      </button>
-      <AnimatePresence initial={false}>
-        {open && (
-          <motion.div
-            key="content"
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="overflow-hidden"
-          >
-            <div className="px-6 pb-6 border-t border-border pt-4">
-              <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-                {project.description}
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {project.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="text-[10px] uppercase tracking-wider border border-border px-2.5 py-1 text-muted-foreground"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
+        <h3 className="text-2xl font-bold mb-1 leading-snug">{project.title}</h3>
+        <p className="text-sm text-muted-foreground mb-6">{project.subtitle}</p>
+        <p className="text-base leading-relaxed text-foreground/80 mb-7">{project.description}</p>
+        <div className="flex flex-wrap gap-2">
+          {project.tags.map((tag) => (
+            <span
+              key={tag}
+              className="text-[11px] uppercase tracking-wider border border-border rounded-full px-3 py-1 text-muted-foreground"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      </motion.div>
+    </motion.div>
   );
 }
 
 export default function App() {
+  const [activeProject, setActiveProject] = useState<(typeof PROJECTS)[0] | null>(null);
+
   return (
     <div className="min-h-screen bg-background text-foreground font-sans">
 
-      {/* NAV */}
-      <nav className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
-        <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
-          <span className="text-xs font-bold tracking-[0.2em] uppercase">{NAME}</span>
-          <div className="hidden md:flex items-center gap-8 text-xs tracking-[0.15em] uppercase text-muted-foreground">
+      {/* ── NAV ── */}
+      <nav className="sticky top-0 z-40 bg-background/96 backdrop-blur-sm border-b border-border">
+        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between gap-6">
+          <span className="text-sm font-bold tracking-widest uppercase shrink-0">{NAME}</span>
+          <div className="hidden md:flex items-center gap-8 text-xs tracking-[0.12em] uppercase text-muted-foreground">
             <a href="#about" className="hover:text-foreground transition-colors">Обо мне</a>
             <a href="#services" className="hover:text-foreground transition-colors">Услуги</a>
             <a href="#projects" className="hover:text-foreground transition-colors">Проекты</a>
-            <a href="#contact" className="hover:text-foreground transition-colors">Контакты</a>
           </div>
+          <PillButton href={TELEGRAM_LINK}>Написать в Telegram</PillButton>
         </div>
       </nav>
 
       <main className="max-w-6xl mx-auto px-6">
 
-        {/* HERO */}
-        <section className="pt-20 pb-24 grid grid-cols-1 md:grid-cols-[1fr_auto_auto] gap-12 items-start">
+        {/* ── HERO ── */}
+        <section className="pt-16 pb-12 grid grid-cols-[1fr_auto] gap-10 md:gap-16 items-center">
 
-          {/* Left: name + photo */}
+          {/* Left: name + role */}
           <motion.div initial="hidden" animate="visible" variants={stagger}>
-            <motion.p variants={fadeUp} className="text-xs tracking-[0.2em] uppercase text-muted-foreground mb-6">
+            <motion.p
+              variants={fadeUp}
+              className="text-xs tracking-[0.22em] uppercase text-muted-foreground mb-5"
+            >
               Привет, я
             </motion.p>
             <motion.h1
               variants={fadeUp}
-              className="text-6xl md:text-8xl font-extrabold leading-[1.0] tracking-tight mb-8"
+              className="text-5xl md:text-7xl font-bold leading-[1.02] tracking-tight mb-5"
             >
               {NAME.split(" ").map((word, i) => (
                 <span key={i} className="block">{word}</span>
               ))}
             </motion.h1>
-            <motion.p variants={fadeUp} className="text-base text-muted-foreground max-w-xs leading-relaxed mb-10">
+            <motion.p
+              variants={fadeUp}
+              className="text-base text-muted-foreground leading-relaxed max-w-sm"
+            >
               {ROLE}
             </motion.p>
-            <motion.a
-              variants={fadeUp}
-              href={TELEGRAM_LINK}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-foreground text-background text-xs font-bold uppercase tracking-widest px-6 py-3 hover:bg-accent hover:text-accent-foreground transition-colors"
-            >
-              Написать мне <ArrowRight className="w-3.5 h-3.5" />
-            </motion.a>
           </motion.div>
 
-          {/* Center: photo */}
+          {/* Right: photo — arch shape (rounded bottom) */}
           <motion.div
-            initial={{ opacity: 0, y: 16 }}
+            initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
-            className="w-52 md:w-64 aspect-[3/4] bg-secondary flex items-center justify-center shrink-0"
+            transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
+            className="shrink-0 overflow-hidden bg-secondary"
+            style={{
+              width: "clamp(180px, 22vw, 300px)",
+              aspectRatio: "3 / 4",
+              borderRadius: "0 0 9999px 9999px",
+            }}
           >
-            {/* ЗАМЕНИ IMG: раскомментируй строку ниже и укажи путь к своему фото */}
-            {/* <img src="/photo.jpg" alt="Фото" className="w-full h-full object-cover" /> */}
-            <span className="text-xs tracking-widest uppercase text-muted-foreground">Ваше фото</span>
+            {/*
+              ФОТО: раскомментируй строку ниже и укажи путь к своему фото.
+              Положи фото в папку artifacts/portfolio/public/ и назови, например, photo.jpg.
+              <img src="/photo.jpg" alt="Фото" className="w-full h-full object-cover object-top" />
+            */}
+            <div className="w-full h-full flex items-center justify-center">
+              <span className="text-[11px] tracking-widest uppercase text-muted-foreground">Ваше фото</span>
+            </div>
           </motion.div>
+        </section>
 
-          {/* Right: stats */}
+        {/* ── FACTS STRIP ── */}
+        <section className="py-12 border-t border-border">
           <motion.div
             initial="hidden"
-            animate="visible"
+            whileInView="visible"
+            viewport={{ once: true }}
             variants={stagger}
-            className="flex flex-col gap-8 pt-2"
+            className="grid grid-cols-2 md:grid-cols-4 gap-8"
           >
             {FACTS.map((f, i) => (
-              <motion.div key={i} variants={fadeUp} className="text-right">
-                <div className="text-4xl font-extrabold leading-none">{f.stat}</div>
-                <div className="text-[10px] uppercase tracking-widest text-muted-foreground mt-1 max-w-[100px] ml-auto leading-tight">
+              <motion.div key={i} variants={fadeUp} className="flex flex-col gap-2">
+                <div className="text-3xl md:text-4xl font-bold">{f.stat}</div>
+                <div className="text-xs uppercase tracking-wider text-muted-foreground leading-tight">
                   {f.label}
                 </div>
               </motion.div>
@@ -206,102 +266,157 @@ export default function App() {
           </motion.div>
         </section>
 
-        {/* ABOUT */}
-        <section id="about" className="py-24 scroll-mt-16 border-t border-border">
+        {/* ── ABOUT ── */}
+        <section id="about" className="py-20 scroll-mt-16 border-t border-border">
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-80px" }}
+            viewport={{ once: true, margin: "-60px" }}
             variants={stagger}
+            className="grid grid-cols-1 md:grid-cols-[2fr_3fr] gap-12 items-start"
           >
-            <motion.h2 variants={fadeUp} className="text-5xl md:text-7xl font-extrabold uppercase leading-none mb-12">
+            <motion.h2
+              variants={fadeUp}
+              className="text-3xl md:text-5xl font-bold uppercase leading-none"
+            >
               Обо мне
             </motion.h2>
             <motion.p
               variants={fadeUp}
-              className="text-xl md:text-2xl font-light leading-relaxed max-w-3xl text-muted-foreground"
+              className="text-lg md:text-xl leading-relaxed text-muted-foreground"
             >
               {ABOUT_TEXT}
             </motion.p>
           </motion.div>
         </section>
 
-        {/* SERVICES */}
-        <section id="services" className="py-24 scroll-mt-16 border-t border-border">
+        {/* ── SERVICES ── */}
+        <section id="services" className="py-20 scroll-mt-16 border-t border-border">
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-80px" }}
+            viewport={{ once: true, margin: "-60px" }}
             variants={stagger}
           >
-            <motion.h2 variants={fadeUp} className="text-5xl md:text-7xl font-extrabold uppercase leading-none mb-16">
-              С чем могу<br />помочь
-            </motion.h2>
-            <motion.div variants={stagger} className="grid grid-cols-1 md:grid-cols-3 gap-12">
+            {/* Heading row */}
+            <div className="grid grid-cols-1 md:grid-cols-[2fr_3fr] gap-12 mb-14">
+              <motion.h2
+                variants={fadeUp}
+                className="text-3xl md:text-5xl font-bold uppercase leading-none"
+              >
+                С чем могу<br />помочь
+              </motion.h2>
+              <motion.p variants={fadeUp} className="text-base leading-relaxed text-muted-foreground">
+                {SERVICES_SUBTITLE}
+              </motion.p>
+            </div>
+
+            {/* Columns */}
+            <motion.div
+              variants={stagger}
+              className="grid grid-cols-1 md:grid-cols-3 gap-10 pt-10 border-t border-border"
+            >
               {SERVICES.map((s, i) => (
                 <motion.div key={i} variants={fadeUp}>
-                  <span className="block text-xs text-muted-foreground font-mono mb-4 tracking-widest">0{i + 1}</span>
-                  <h3 className="text-xl font-bold mb-3">{s.title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
+                  <span className="block text-xs text-muted-foreground font-mono mb-4 tracking-widest">
+                    0{i + 1}
+                  </span>
+                  <h3 className="text-lg font-bold mb-6">{s.title}</h3>
+                  <ul className="flex flex-col gap-3.5">
+                    {s.items.map((item, j) => (
+                      <li
+                        key={j}
+                        className="flex items-start gap-2.5 text-sm text-muted-foreground leading-snug"
+                      >
+                        <span className="mt-[5px] w-1.5 h-1.5 rounded-full bg-accent shrink-0" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
                 </motion.div>
               ))}
             </motion.div>
           </motion.div>
         </section>
 
-        {/* PROJECTS */}
-        <section id="projects" className="py-24 scroll-mt-16 border-t border-border">
+        {/* ── PROJECTS ── */}
+        <section id="projects" className="py-20 scroll-mt-16 border-t border-border">
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-80px" }}
+            viewport={{ once: true, margin: "-60px" }}
             variants={stagger}
           >
-            <motion.h2 variants={fadeUp} className="text-5xl md:text-7xl font-extrabold uppercase leading-none mb-16">
+            <motion.h2
+              variants={fadeUp}
+              className="text-3xl md:text-5xl font-bold uppercase leading-none mb-12"
+            >
               Мои проекты
             </motion.h2>
+
             <motion.div
               variants={stagger}
-              className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4"
+              className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-px bg-border"
             >
               {PROJECTS.map((p) => (
-                <motion.div key={p.id} variants={fadeUp}>
-                  <ProjectCard project={p} />
-                </motion.div>
+                <motion.button
+                  key={p.id}
+                  variants={fadeUp}
+                  onClick={() => setActiveProject(p)}
+                  className="group text-left bg-background p-6 flex flex-col gap-3 cursor-pointer hover:bg-secondary/70 transition-colors"
+                  style={{ minHeight: "220px" }}
+                >
+                  <span className="text-xs font-mono text-muted-foreground tracking-widest">
+                    {p.id}
+                  </span>
+                  <h3 className="text-base font-bold leading-snug group-hover:text-accent transition-colors flex-1">
+                    {p.title}
+                  </h3>
+                  <p className="text-xs text-muted-foreground">{p.subtitle}</p>
+                  <div className="flex flex-wrap gap-1.5 pt-3">
+                    {p.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="text-[10px] uppercase tracking-wider border border-border rounded-full px-2.5 py-0.5 text-muted-foreground"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </motion.button>
               ))}
             </motion.div>
+
+            <p className="mt-4 text-xs text-muted-foreground tracking-wide">
+              Нажми на карточку, чтобы узнать подробнее
+            </p>
           </motion.div>
         </section>
 
       </main>
 
-      {/* CTA */}
-      <section id="contact" className="scroll-mt-16 mt-8 border-t border-border bg-secondary/40">
+      {/* ── CTA ── */}
+      <section id="contact" className="scroll-mt-16 mt-6 border-t border-border bg-secondary/40">
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
+          viewport={{ once: true, margin: "-60px" }}
           variants={stagger}
           className="max-w-6xl mx-auto px-6 py-28 flex flex-col md:flex-row md:items-end justify-between gap-12"
         >
           <motion.h2
             variants={fadeUp}
-            className="text-5xl md:text-7xl font-extrabold uppercase leading-none"
+            className="text-4xl md:text-6xl font-bold uppercase leading-none"
           >
-            Давайте<br />поговорим
+            Давайте<br />знакомиться
           </motion.h2>
-          <motion.div variants={fadeUp} className="flex flex-col gap-6 md:items-end">
-            <p className="text-sm text-muted-foreground max-w-xs md:text-right leading-relaxed">
-              Напишите мне в Telegram — расскажу подробнее о своём опыте и обсудим вашу задачу.
+          <motion.div variants={fadeUp} className="flex flex-col gap-5 md:items-end">
+            <p className="text-base text-muted-foreground max-w-xs md:text-right leading-relaxed">
+              Я всегда рада новым знакомствам и обмену опытом, смело пишите мне
             </p>
-            <a
-              href={TELEGRAM_LINK}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-3 bg-foreground text-background text-xs font-bold uppercase tracking-widest px-8 py-4 hover:bg-accent hover:text-accent-foreground transition-colors self-start md:self-auto"
-            >
-              Написать в Telegram <ArrowRight className="w-3.5 h-3.5" />
-            </a>
+            <PillButton href={TELEGRAM_LINK} className="self-start md:self-auto">
+              Написать в Telegram <ArrowRight className="w-4 h-4" />
+            </PillButton>
           </motion.div>
         </motion.div>
       </section>
@@ -312,6 +427,16 @@ export default function App() {
           <span>Portfolio</span>
         </div>
       </footer>
+
+      {/* ── PROJECT MODAL ── */}
+      <AnimatePresence>
+        {activeProject && (
+          <ProjectModal
+            project={activeProject}
+            onClose={() => setActiveProject(null)}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 }
