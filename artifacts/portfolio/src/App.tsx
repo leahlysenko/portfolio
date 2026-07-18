@@ -59,7 +59,8 @@ const PROJECTS = [
   {
     id: "01",
     title: "Онбординг-программа",
-    subtitle: "Технологическая компания",
+    audience: "Целевая аудитория — краткое описание",
+    company: "Технологическая компания",
     description:
       "Разработала систему адаптации для 200+ сотрудников крупной технологической компании. Проект включал анализ текущих процессов, проектирование нового пути сотрудника и создание учебных материалов.",
     tags: ["Онбординг", "Образование", "HR"],
@@ -67,7 +68,8 @@ const PROJECTS = [
   {
     id: "02",
     title: "База знаний",
-    subtitle: "EdTech-платформа",
+    audience: "Целевая аудитория — краткое описание",
+    company: "EdTech-платформа",
     description:
       "Спроектировала корпоративную wiki с нуля: архитектура, навигация, контент. Внедрила процессы поддержания базы в актуальном состоянии и обучила команду работе с ней.",
     tags: ["Wiki", "Управление знаниями"],
@@ -75,7 +77,8 @@ const PROJECTS = [
   {
     id: "03",
     title: "Курс по управлению временем",
-    subtitle: "Внутреннее обучение",
+    audience: "Целевая аудитория — краткое описание",
+    company: "Внутреннее обучение",
     description:
       "Методологический дизайн и разработка контента для внутреннего обучения. Курс прошли 150+ сотрудников, NPS составил 82%.",
     tags: ["Курс", "LXD"],
@@ -83,7 +86,8 @@ const PROJECTS = [
   {
     id: "04",
     title: "Менторинг методистов",
-    subtitle: "Профессиональное сообщество",
+    audience: "Целевая аудитория — краткое описание",
+    company: "Профессиональное сообщество",
     description:
       "Программа поддержки 15 коллег-специалистов: разборы, обратная связь, рост компетенций. Итогом стал рост удовлетворённости участников на 40%.",
     tags: ["Менторинг", "Сообщество"],
@@ -179,7 +183,7 @@ function ProjectModal({
           {project.id}
         </span>
         <h3 className="text-2xl font-bold mb-1 leading-snug">{project.title}</h3>
-        <p className="text-sm text-muted-foreground mb-6">{project.subtitle}</p>
+        <p className="text-sm text-muted-foreground mb-6">{project.company}</p>
         <p className="text-base leading-relaxed font-sans text-foreground/80 mb-7">
           {project.description}
         </p>
@@ -405,25 +409,20 @@ export default function App() {
                 <span className="text-xs font-mono text-muted-foreground tracking-widest">
                   {p.id}
                 </span>
-                <h3 className="text-base font-bold leading-snug group-hover:text-accent transition-colors flex-1">
+                <h3 className="text-base font-bold leading-snug group-hover:text-accent transition-colors">
                   {p.title}
                 </h3>
-                <p className="text-xs font-sans text-muted-foreground">{p.subtitle}</p>
-                <div className="flex flex-wrap gap-1.5 pt-3">
-                  {p.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="text-[10px] uppercase tracking-wider border border-border rounded-full px-2.5 py-0.5 text-muted-foreground"
-                    >
-                      {tag}
-                    </span>
-                  ))}
+                <p className="text-xs text-muted-foreground leading-snug flex-1">{p.audience}</p>
+                <div className="pt-2">
+                  <span className="text-[11px] border border-border rounded-full px-3 py-1 text-muted-foreground">
+                    {p.company}
+                  </span>
                 </div>
               </motion.button>
             ))}
           </motion.div>
 
-          <p className="mt-4 text-xs text-muted-foreground tracking-wide">
+          <p className="mt-10 text-xs text-muted-foreground tracking-wide">
             Нажмите на карточку, чтобы узнать подробнее
           </p>
         </section>
