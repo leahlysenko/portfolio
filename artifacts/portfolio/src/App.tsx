@@ -351,7 +351,7 @@ export default function App() {
                   <motion.div
                     key={i}
                     variants={fadeUp}
-                    className="rounded-2xl p-6 flex flex-col gap-4 border border-border"
+                    className="rounded-2xl p-6 flex flex-col gap-4 border border-border transition-colors duration-300 hover:bg-secondary/40"
                   >
                     <span className="text-[10px] text-foreground/40 font-mono tracking-widest">
                       0{i + 1}
