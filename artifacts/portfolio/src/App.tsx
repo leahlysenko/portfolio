@@ -351,7 +351,7 @@ export default function App() {
                   <motion.div
                     key={i}
                     variants={fadeUp}
-                    className="group rounded-2xl p-6 flex flex-col gap-4 border border-border transition-colors duration-300 hover:bg-[#C7CCC7]"
+                    className="group rounded-2xl p-6 flex flex-col gap-4 border border-border transition-colors duration-300 hover:bg-[#DBDDD6]"
                   >
                     <span className="text-[10px] text-foreground/40 font-mono tracking-widest">
                       0{i + 1}
@@ -431,7 +431,7 @@ export default function App() {
       </main>
 
       {/* ── CTA ── */}
-      <section id="contact" className="scroll-mt-16 mt-6 border-t border-border bg-[#C7CCC7]">
+      <section id="contact" className="scroll-mt-16 mt-6 border-t border-border bg-[#DBDDD6]">
         <motion.div
           initial="hidden"
           whileInView="visible"
