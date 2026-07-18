@@ -198,9 +198,8 @@ export default function App() {
           <span className="text-sm font-bold tracking-widest uppercase shrink-0">{NAME}</span>
           <div className="hidden md:flex items-center gap-8 text-xs tracking-[0.12em] uppercase text-muted-foreground">
             <a href="#about"    className="hover:text-foreground transition-colors">Обо мне</a>
-            <a href="#services" className="hover:text-foreground transition-colors">С чем помогу</a>
+            <a href="#services" className="hover:text-foreground transition-colors">С чем могу помочь</a>
             <a href="#projects" className="hover:text-foreground transition-colors">Мои проекты</a>
-            <a href="#contact"  className="hover:text-foreground transition-colors">Контакты</a>
           </div>
           <PillButton href={TELEGRAM_LINK}>Написать в Telegram</PillButton>
         </div>
@@ -257,29 +256,8 @@ export default function App() {
             />
           </motion.div>
 
-          {/* RIGHT: nav links stacked vertically */}
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={stagger}
-            className="flex flex-col gap-5 pl-10 self-center"
-          >
-            {[
-              { label: "Обо мне",      href: "#about" },
-              { label: "С чем помогу", href: "#services" },
-              { label: "Мои проекты",  href: "#projects" },
-              { label: "Контакты",     href: "#contact" },
-            ].map((link) => (
-              <motion.a
-                key={link.href}
-                variants={fadeUp}
-                href={link.href}
-                className="text-sm tracking-[0.12em] uppercase text-muted-foreground hover:text-accent transition-colors"
-              >
-                {link.label}
-              </motion.a>
-            ))}
-          </motion.div>
+          {/* RIGHT: empty column for visual balance */}
+          <div />
         </section>
 
         {/* ── FACTS STRIP ── */}
