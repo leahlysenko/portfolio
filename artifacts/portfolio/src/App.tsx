@@ -67,7 +67,7 @@ const PROJECTS = [
   },
   {
     id: "02",
-    title: "Разработка программы о\u00a0современной скульптуре",
+    title: "Разработка программы\nо\u00a0современной\nскульптуре",
     audience: "Художники, начинающие скульпторы",
     company: "MSCA",
     description:
@@ -409,7 +409,7 @@ export default function App() {
                 <span className="text-xs font-mono text-muted-foreground tracking-widest">
                   {p.id}
                 </span>
-                <h3 className="text-base font-bold leading-snug group-hover:text-accent transition-colors">
+                <h3 className="text-base font-bold leading-snug group-hover:text-accent transition-colors whitespace-pre-line">
                   {p.title}
                 </h3>
                 <p className="text-xs text-muted-foreground leading-snug flex-1">{p.audience}</p>
