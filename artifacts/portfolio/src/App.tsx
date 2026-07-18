@@ -196,22 +196,23 @@ export default function App() {
       <nav className="sticky top-0 z-40 bg-background/96 backdrop-blur-sm border-b border-border">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between gap-6">
           <span className="text-sm font-bold tracking-widest uppercase shrink-0">{NAME}</span>
-          <div className="hidden md:flex items-center gap-8 text-xs tracking-[0.12em] uppercase text-muted-foreground">
-            <a href="#about" className="hover:text-foreground transition-colors">Обо мне</a>
-            <a href="#services" className="hover:text-foreground transition-colors">С чем помогу</a>
-            <a href="#projects" className="hover:text-foreground transition-colors">Мои проекты</a>
-          </div>
           <PillButton href={TELEGRAM_LINK}>Написать в Telegram</PillButton>
         </div>
       </nav>
 
       <main className="max-w-6xl mx-auto px-6">
 
-        {/* ── HERO ── */}
-        <section className="pt-16 pb-12 grid grid-cols-[2fr_3fr] gap-8 md:gap-10 items-center">
-          {/* Left: greeting + role */}
-          <motion.div initial="hidden" animate="visible" variants={stagger}>
-            <motion.h1 variants={fadeUp} className="leading-[1.02] tracking-tight mb-6">
+        {/* ── HERO — 3-column ref-1 layout ── */}
+        <section className="pt-12 pb-12 grid grid-cols-[5fr_6fr_3fr] items-center gap-0">
+
+          {/* LEFT: text — nudges right to slightly overlap photo */}
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={stagger}
+            className="relative z-10 pr-0 translate-x-10"
+          >
+            <motion.h1 variants={fadeUp} className="leading-[1.02] tracking-tight mb-5">
               <span className="block text-5xl md:text-7xl font-bold font-sans">
                 Привет,
               </span>
@@ -224,20 +225,21 @@ export default function App() {
             </motion.h1>
             <motion.p
               variants={fadeUp}
-              className="text-xl font-serif leading-relaxed text-muted-foreground max-w-sm"
+              className="text-xl font-serif leading-relaxed text-muted-foreground"
             >
               {ROLE}
             </motion.p>
           </motion.div>
 
-          {/* Right: photo — arch shape */}
+          {/* CENTER: photo */}
           <motion.div
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
-            className="overflow-hidden bg-secondary mx-auto"
+            className="relative z-0 overflow-hidden bg-secondary mx-auto"
             style={{
-              width: "min(420px, 95%)",
+              width: "100%",
+              maxWidth: "420px",
               aspectRatio: "3 / 4",
               borderRadius: "0 0 9999px 9999px",
             }}
@@ -247,6 +249,30 @@ export default function App() {
               alt="Лия Лысенко"
               className="w-full h-full object-cover object-top"
             />
+          </motion.div>
+
+          {/* RIGHT: nav links stacked vertically */}
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={stagger}
+            className="flex flex-col gap-5 pl-10 self-center"
+          >
+            {[
+              { label: "Обо мне",      href: "#about" },
+              { label: "С чем помогу", href: "#services" },
+              { label: "Мои проекты",  href: "#projects" },
+              { label: "Контакты",     href: "#contact" },
+            ].map((link) => (
+              <motion.a
+                key={link.href}
+                variants={fadeUp}
+                href={link.href}
+                className="text-sm tracking-[0.12em] uppercase text-muted-foreground hover:text-accent transition-colors"
+              >
+                {link.label}
+              </motion.a>
+            ))}
           </motion.div>
         </section>
 
