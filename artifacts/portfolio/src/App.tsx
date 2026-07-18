@@ -399,7 +399,7 @@ export default function App() {
                 key={p.id}
                 variants={fadeUp}
                 onClick={() => setActiveProject(p)}
-                className="group text-left bg-background p-6 flex flex-col gap-3 cursor-pointer hover:bg-[#C7CCC7] transition-colors"
+                className="group text-left bg-background p-6 flex flex-col gap-3 cursor-pointer hover:bg-[#E5E5DE] transition-colors"
                 style={{ minHeight: "220px" }}
               >
                 <span className="text-xs font-mono text-muted-foreground tracking-widest">
