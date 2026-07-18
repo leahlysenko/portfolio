@@ -350,10 +350,10 @@ export default function App() {
             className="relative z-10 pr-0 translate-x-10"
           >
             <motion.h1 variants={fadeUp} className="leading-[1.02] tracking-tight mb-5">
-              <span className="block text-5xl md:text-7xl" style={{ fontFamily: "'Santa Catarina', serif" }}>
+              <span className="block text-5xl md:text-7xl font-bold font-sans">
                 Привет,
               </span>
-              <span className="block text-5xl md:text-7xl text-accent" style={{ fontFamily: "'Santa Catarina', serif" }}>
+              <span className="block text-5xl md:text-7xl text-accent" style={{ fontFamily: "'Cormorant', serif", fontWeight: 400 }}>
                 я Лия
               </span>
             </motion.h1>
