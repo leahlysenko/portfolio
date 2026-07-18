@@ -24,30 +24,31 @@ const SERVICES_SUBTITLE =
 
 const SERVICES = [
   {
-    title: "Проектирование обучения",
+    title: "Создать образовательный продукт с нуля — от идеи до реализации",
     items: [
-      "Анализ целевой аудитории",
-      "Разработка учебных программ",
-      "Проектирование курсов и треков",
-      "Методологическое сопровождение",
+      "Проведу брифинг и выясню, какие цели и задачи ставит перед собой образовательный продукт",
+      "Составлю гипотезы и проведу исследования, чтобы создать концепцию продукта",
+      "Спроектирую программу: цели, стратегии их достижения, путь студента и образовательную среду, опишу методологию и создам рабочие шаблоны",
+      "Разработаю систему оценки программы: определю способы оценки образовательных результатов, продумаю систему метрик",
+      "Помогу команде разработать контентную часть — в том числе при работе с экспертами",
+      "Сопровожу первый запуск программы и помогу проанализировать результаты",
     ],
   },
   {
-    title: "Управление знаниями",
+    title: "Переработать существующую программу и улучшить результат",
     items: [
-      "Базы знаний и корпоративные wiki",
-      "Онбординг-программы",
-      "Процессы передачи экспертизы",
-      "Архитектура информации",
+      "Проведу методический аудит, помогу найти слабые места и составлю список улучшений",
+      "Сделаю редизайн программы или её части, проведу тестирование",
+      "Спроектирую систему оценки программы — если её ещё нет или непонятно, как оценить результаты программы на уровне студента и метрик",
     ],
   },
   {
-    title: "Поддержка методистов",
+    title: "Стать опорой и поддержкой, если вы коллега по цеху",
     items: [
-      "Консультации и разборы кейсов",
-      "Ревью учебных материалов",
-      "Менторинг специалистов",
-      "Лидирование методической команды",
+      "Проконсультирую и дам второе мнение, как можно решить вашу текущую задачу, поделюсь своим опытом",
+      "Поддержу, если вы в начале своего пути и чувствуете неуверенность в своих шагах",
+      "Помогу отрефлексировать опыт и определить свой следующий шаг в карьере",
+      "И просто выслушаю, если вы чувствуете, что попали в среду «без методистов»",
     ],
   },
 ];
@@ -307,15 +308,15 @@ export default function App() {
         </section>
 
         {/* ── SERVICES ── */}
-        <section id="services" className="py-20 scroll-mt-16 border-t border-border">
+        <section id="services" className="py-14 scroll-mt-16 border-t border-border">
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.1 }}
             variants={stagger}
           >
-            {/* Heading + subtitle — unified block, no separator before columns */}
-            <div className="grid grid-cols-1 md:grid-cols-[2fr_3fr] gap-12 mb-14">
+            {/* Heading + subtitle */}
+            <div className="grid grid-cols-1 md:grid-cols-[2fr_3fr] gap-10 mb-10">
               <motion.h2
                 variants={fadeUp}
                 className="text-3xl md:text-5xl font-bold uppercase leading-none"
@@ -330,24 +331,24 @@ export default function App() {
               </motion.p>
             </div>
 
-            {/* Three columns */}
+            {/* Three columns — compact so all fit on screen */}
             <motion.div
               variants={stagger}
-              className="grid grid-cols-1 md:grid-cols-3 gap-10"
+              className="grid grid-cols-1 md:grid-cols-3 gap-8"
             >
               {SERVICES.map((s, i) => (
                 <motion.div key={i} variants={fadeUp}>
-                  <span className="block text-xs text-muted-foreground font-mono mb-4 tracking-widest">
+                  <span className="block text-[10px] text-muted-foreground font-mono mb-3 tracking-widest">
                     0{i + 1}
                   </span>
-                  <h3 className="text-lg font-bold mb-6">{s.title}</h3>
-                  <ul className="flex flex-col gap-3.5">
+                  <h3 className="text-sm font-bold leading-snug mb-4">{s.title}</h3>
+                  <ul className="flex flex-col gap-2.5">
                     {s.items.map((item, j) => (
                       <li
                         key={j}
-                        className="flex items-start gap-2.5 text-sm font-serif text-muted-foreground leading-snug"
+                        className="flex items-start gap-2 text-xs font-serif text-muted-foreground leading-snug"
                       >
-                        <span className="mt-[5px] w-1.5 h-1.5 rounded-full bg-accent shrink-0" />
+                        <span className="mt-[4px] w-1 h-1 rounded-full bg-accent shrink-0" />
                         {item}
                       </li>
                     ))}
