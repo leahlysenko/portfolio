@@ -351,12 +351,12 @@ export default function App() {
                   <motion.div
                     key={i}
                     variants={fadeUp}
-                    className="rounded-2xl p-6 flex flex-col gap-4 border border-border transition-colors duration-300 hover:bg-secondary/40"
+                    className="group rounded-2xl p-6 flex flex-col gap-4 border border-border transition-colors duration-300 hover:bg-secondary/40"
                   >
                     <span className="text-[10px] text-foreground/40 font-mono tracking-widest">
                       0{i + 1}
                     </span>
-                    <h3 className="text-base font-bold leading-snug whitespace-pre-line">{nb(s.title)}</h3>
+                    <h3 className="text-base font-bold leading-snug whitespace-pre-line transition-colors duration-300 group-hover:text-accent">{nb(s.title)}</h3>
                     <ul className="flex flex-col gap-2">
                       {s.items.map((item, j) => (
                         <li
