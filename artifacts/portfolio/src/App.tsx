@@ -367,7 +367,7 @@ export default function App() {
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
-            className="relative z-0 overflow-hidden bg-secondary mx-auto"
+            className="relative z-0 overflow-hidden bg-secondary mx-auto translate-x-10"
             style={{
               width: "100%",
               maxWidth: "420px",
