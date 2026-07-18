@@ -353,7 +353,7 @@ export default function App() {
               <span className="block text-4xl md:text-6xl font-sans font-normal">
                 Привет,
               </span>
-              <span className="block text-6xl md:text-8xl text-accent" style={{ fontFamily: "'Old Standard TT', serif", fontWeight: 700 }}>
+              <span className="block text-6xl md:text-8xl text-accent" style={{ fontFamily: "'Cinzel Decorative', serif", fontWeight: 700 }}>
                 я Лия
               </span>
             </motion.h1>
