@@ -208,20 +208,23 @@ export default function App() {
       <main className="max-w-6xl mx-auto px-6">
 
         {/* ── HERO ── */}
-        <section className="pt-16 pb-12 grid grid-cols-[1fr_1fr] gap-8 md:gap-12 items-center">
+        <section className="pt-16 pb-12 grid grid-cols-[2fr_3fr] gap-8 md:gap-10 items-center">
           {/* Left: greeting + role */}
           <motion.div initial="hidden" animate="visible" variants={stagger}>
             <motion.h1 variants={fadeUp} className="leading-[1.02] tracking-tight mb-6">
               <span className="block text-5xl md:text-7xl font-bold font-sans">
                 Привет,
               </span>
-              <span className="block text-5xl md:text-7xl font-serif italic text-accent">
+              <span
+                className="block text-5xl md:text-7xl italic text-accent"
+                style={{ fontFamily: "'Bodoni Moda', Georgia, serif" }}
+              >
                 я Лия
               </span>
             </motion.h1>
             <motion.p
               variants={fadeUp}
-              className="text-lg font-serif leading-relaxed text-muted-foreground max-w-sm"
+              className="text-xl font-serif leading-relaxed text-muted-foreground max-w-sm"
             >
               {ROLE}
             </motion.p>
