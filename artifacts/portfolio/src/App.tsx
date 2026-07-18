@@ -196,6 +196,12 @@ export default function App() {
       <nav className="sticky top-0 z-40 bg-background/96 backdrop-blur-sm border-b border-border">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between gap-6">
           <span className="text-sm font-bold tracking-widest uppercase shrink-0">{NAME}</span>
+          <div className="hidden md:flex items-center gap-8 text-xs tracking-[0.12em] uppercase text-muted-foreground">
+            <a href="#about"    className="hover:text-foreground transition-colors">Обо мне</a>
+            <a href="#services" className="hover:text-foreground transition-colors">С чем помогу</a>
+            <a href="#projects" className="hover:text-foreground transition-colors">Мои проекты</a>
+            <a href="#contact"  className="hover:text-foreground transition-colors">Контакты</a>
+          </div>
           <PillButton href={TELEGRAM_LINK}>Написать в Telegram</PillButton>
         </div>
       </nav>
