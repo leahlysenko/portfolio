@@ -103,6 +103,15 @@ const stagger = {
   visible: { transition: { staggerChildren: 0.09 } },
 };
 
+// Ставит неразрывный пробел после предлогов и союзов,
+// чтобы они не оставались в конце строки
+function nb(text: string): string {
+  return text.replace(
+    /\b(в|и|а|на|с|к|о|от|из|за|до|у|по|под|над|при|но|да|то|как|что|или|ни|же|бы|ли|не|со|ко|об|обо|это|для|при|всё|все)\s/gi,
+    (_, prep) => `${prep}\u00A0`,
+  );
+}
+
 
 function PillButton({
   href,
@@ -331,30 +340,42 @@ export default function App() {
               </motion.p>
             </div>
 
-            {/* Three columns — compact so all fit on screen */}
+            {/* Three columns — card style like reference */}
             <motion.div
               variants={stagger}
-              className="grid grid-cols-1 md:grid-cols-3 gap-8"
+              className="grid grid-cols-1 md:grid-cols-3 gap-4"
             >
-              {SERVICES.map((s, i) => (
-                <motion.div key={i} variants={fadeUp}>
-                  <span className="block text-[10px] text-muted-foreground font-mono mb-3 tracking-widest">
-                    0{i + 1}
-                  </span>
-                  <h3 className="text-sm font-bold leading-snug mb-4">{s.title}</h3>
-                  <ul className="flex flex-col gap-2.5">
-                    {s.items.map((item, j) => (
-                      <li
-                        key={j}
-                        className="flex items-start gap-2 text-xs font-serif text-muted-foreground leading-snug"
-                      >
-                        <span className="mt-[4px] w-1 h-1 rounded-full bg-accent shrink-0" />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </motion.div>
-              ))}
+              {SERVICES.map((s, i) => {
+                const cardBg = [
+                  "hsl(155 22% 84%)",   // 01 — sage green
+                  "hsl(33 30% 86%)",    // 02 — warm sand
+                  "hsl(215 18% 85%)",   // 03 — cool grey-blue
+                ][i];
+                return (
+                  <motion.div
+                    key={i}
+                    variants={fadeUp}
+                    className="rounded-2xl p-6 flex flex-col gap-4"
+                    style={{ backgroundColor: cardBg }}
+                  >
+                    <span className="text-[10px] text-foreground/40 font-mono tracking-widest">
+                      0{i + 1}
+                    </span>
+                    <h3 className="text-base font-bold leading-snug">{nb(s.title)}</h3>
+                    <ul className="flex flex-col gap-2">
+                      {s.items.map((item, j) => (
+                        <li
+                          key={j}
+                          className="flex items-start gap-2 text-sm font-serif text-foreground/70 leading-snug"
+                        >
+                          <span className="mt-[5px] w-1.5 h-1.5 rounded-full bg-accent shrink-0" />
+                          {nb(item)}
+                        </li>
+                      ))}
+                    </ul>
+                  </motion.div>
+                );
+              })}
             </motion.div>
           </motion.div>
         </section>
