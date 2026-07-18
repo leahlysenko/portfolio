@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700&family=Bodoni+Moda:ital,opsz,wght@1,6..96,400;1,6..96,500;1,6..96,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=Bodoni+Moda:ital,opsz,wght@1,6..96,400;1,6..96,500;1,6..96,700&display=swap');
 @import 'tailwindcss';
 @import 'tw-animate-css';
 @plugin "@tailwindcss/typography";
@@ -118,8 +118,8 @@
   --chart-4: 38 10% 45%;
   --chart-5: 38 20% 87%;
 
-  --app-font-sans: 'Onest', sans-serif;
-  --app-font-serif: 'Onest', sans-serif;
+  --app-font-sans: 'Golos Text', sans-serif;
+  --app-font-serif: 'Golos Text', sans-serif;
   --app-font-display: 'Bodoni Moda', Georgia, serif;
   --app-font-mono: Menlo, monospace;
   --radius: 0rem;
