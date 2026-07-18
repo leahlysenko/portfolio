@@ -101,44 +101,6 @@ const stagger = {
   visible: { transition: { staggerChildren: 0.09 } },
 };
 
-// Minimalist monochrome SVG icons for each fact
-const FactIcons = [
-  // 01 — diploma / graduation cap
-  () => (
-    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M14 4L2 10l12 6 12-6-12-6z" />
-      <path d="M2 10v8" />
-      <path d="M8 13v6c0 2 2.5 4 6 4s6-2 6-4v-6" />
-    </svg>
-  ),
-  // 02 — people / learning group
-  () => (
-    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="10" cy="9" r="3.5" />
-      <circle cx="20" cy="9" r="3.5" />
-      <path d="M3 23c0-4 3.1-7 7-7" />
-      <path d="M13 23c0-4 3.1-7 7-7s7 3 7 7" />
-    </svg>
-  ),
-  // 03 — workflow / checklist
-  () => (
-    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <rect x="4" y="3" width="20" height="22" rx="2" />
-      <path d="M9 9h10M9 14h10M9 19h6" />
-      <circle cx="6.5" cy="9" r="0.8" fill="currentColor" stroke="none" />
-      <circle cx="6.5" cy="14" r="0.8" fill="currentColor" stroke="none" />
-      <circle cx="6.5" cy="19" r="0.8" fill="currentColor" stroke="none" />
-    </svg>
-  ),
-  // 04 — helping hand / lightbulb
-  () => (
-    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M10 21h8M11 24h6" />
-      <path d="M14 3a7 7 0 0 1 5 11.95V18a1 1 0 0 1-1 1h-8a1 1 0 0 1-1-1v-3.05A7 7 0 0 1 14 3z" />
-      <path d="M11 18v-3M17 18v-3" />
-    </svg>
-  ),
-];
 
 function PillButton({
   href,
@@ -259,7 +221,7 @@ export default function App() {
             </motion.h1>
             <motion.p
               variants={fadeUp}
-              className="text-base font-serif leading-relaxed text-muted-foreground max-w-sm"
+              className="text-lg font-serif leading-relaxed text-muted-foreground max-w-sm"
             >
               {ROLE}
             </motion.p>
@@ -272,7 +234,7 @@ export default function App() {
             transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
             className="overflow-hidden bg-secondary mx-auto"
             style={{
-              width: "min(340px, 90%)",
+              width: "min(420px, 95%)",
               aspectRatio: "3 / 4",
               borderRadius: "0 0 9999px 9999px",
             }}
@@ -294,17 +256,15 @@ export default function App() {
             variants={stagger}
             className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8"
           >
-            {FACTS.map((text, i) => {
-              const Icon = FactIcons[i];
-              return (
-                <motion.div key={i} variants={fadeUp} className="flex flex-col gap-3">
-                  <span className="text-muted-foreground/70">
-                    <Icon />
-                  </span>
-                  <p className="text-sm font-serif leading-snug text-foreground/80">{text}</p>
-                </motion.div>
-              );
-            })}
+            {FACTS.map((text, i) => (
+              <motion.div key={i} variants={fadeUp} className="flex items-start gap-3">
+                <span
+                  className="mt-[6px] shrink-0 w-2 h-2 rounded-full"
+                  style={{ backgroundColor: "hsl(162 38% 24%)" }}
+                />
+                <p className="text-sm font-serif leading-snug text-foreground/80">{text}</p>
+              </motion.div>
+            ))}
           </motion.div>
         </section>
 
