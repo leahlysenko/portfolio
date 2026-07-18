@@ -179,7 +179,7 @@ function ProjectModal({
         </span>
         <h3 className="text-2xl font-bold mb-1 leading-snug">{project.title}</h3>
         <p className="text-sm text-muted-foreground mb-6">{project.subtitle}</p>
-        <p className="text-base leading-relaxed font-serif text-foreground/80 mb-7">
+        <p className="text-base leading-relaxed font-sans text-foreground/80 mb-7">
           {project.description}
         </p>
         <div className="flex flex-wrap gap-2">
@@ -241,7 +241,7 @@ export default function App() {
             </motion.h1>
             <motion.p
               variants={fadeUp}
-              className="text-xl font-serif leading-relaxed text-muted-foreground"
+              className="text-xl font-sans leading-relaxed text-muted-foreground"
             >
               {ROLE}
             </motion.p>
@@ -286,7 +286,7 @@ export default function App() {
                   className="w-2 h-2 rounded-full"
                   style={{ backgroundColor: "hsl(162 38% 24%)" }}
                 />
-                <p className="text-sm font-serif leading-snug text-foreground/80 whitespace-pre-line">{text}</p>
+                <p className="text-sm font-sans leading-snug text-foreground/80 whitespace-pre-line">{text}</p>
               </motion.div>
             ))}
           </motion.div>
@@ -309,7 +309,7 @@ export default function App() {
             </motion.h2>
             <motion.p
               variants={fadeUp}
-              className="text-base font-serif leading-relaxed text-muted-foreground"
+              className="text-base font-sans leading-relaxed text-muted-foreground"
             >
               {ABOUT_TEXT}
             </motion.p>
@@ -334,7 +334,7 @@ export default function App() {
               </motion.h2>
               <motion.p
                 variants={fadeUp}
-                className="text-base font-serif leading-relaxed text-muted-foreground"
+                className="text-base font-sans leading-relaxed text-muted-foreground"
               >
                 {SERVICES_SUBTITLE}
               </motion.p>
@@ -346,17 +346,11 @@ export default function App() {
               className="grid grid-cols-1 md:grid-cols-3 gap-4"
             >
               {SERVICES.map((s, i) => {
-                const cardBg = [
-                  "hsl(155 22% 84%)",   // 01 — sage green
-                  "hsl(33 30% 86%)",    // 02 — warm sand
-                  "hsl(215 18% 85%)",   // 03 — cool grey-blue
-                ][i];
                 return (
                   <motion.div
                     key={i}
                     variants={fadeUp}
-                    className="rounded-2xl p-6 flex flex-col gap-4"
-                    style={{ backgroundColor: cardBg }}
+                    className="rounded-2xl p-6 flex flex-col gap-4 border border-border"
                   >
                     <span className="text-[10px] text-foreground/40 font-mono tracking-widest">
                       0{i + 1}
@@ -366,7 +360,7 @@ export default function App() {
                       {s.items.map((item, j) => (
                         <li
                           key={j}
-                          className="flex items-start gap-2 text-sm font-serif text-foreground/70 leading-snug"
+                          className="flex items-start gap-2 text-sm font-sans text-foreground/70 leading-snug"
                         >
                           <span className="mt-[5px] w-1.5 h-1.5 rounded-full bg-accent shrink-0" />
                           {nb(item)}
@@ -387,7 +381,7 @@ export default function App() {
             <h2 className="text-3xl md:text-5xl font-bold uppercase leading-none">
               Мои проекты
             </h2>
-            <p className="text-base font-serif leading-relaxed text-muted-foreground">
+            <p className="text-base font-sans leading-relaxed text-muted-foreground">
               {PROJECTS_SUBTITLE}
             </p>
           </div>
@@ -413,7 +407,7 @@ export default function App() {
                 <h3 className="text-base font-bold leading-snug group-hover:text-accent transition-colors flex-1">
                   {p.title}
                 </h3>
-                <p className="text-xs font-serif text-muted-foreground">{p.subtitle}</p>
+                <p className="text-xs font-sans text-muted-foreground">{p.subtitle}</p>
                 <div className="flex flex-wrap gap-1.5 pt-3">
                   {p.tags.map((tag) => (
                     <span
@@ -451,7 +445,7 @@ export default function App() {
             Давайте<br />знакомиться
           </motion.h2>
           <motion.div variants={fadeUp} className="flex flex-col gap-5 md:items-end">
-            <p className="text-base font-serif text-muted-foreground max-w-xs md:text-right leading-relaxed">
+            <p className="text-base font-sans text-muted-foreground max-w-xs md:text-right leading-relaxed">
               Я всегда рада новым знакомствам и обмену опытом, смело пишите мне
             </p>
             <PillButton href={TELEGRAM_LINK} className="self-start md:self-auto">
