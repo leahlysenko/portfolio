@@ -326,7 +326,7 @@ export default function App() {
             variants={stagger}
           >
             {/* Heading + subtitle */}
-            <div className="grid grid-cols-1 md:grid-cols-[2fr_3fr] gap-10 mb-10">
+            <div className="grid grid-cols-1 md:grid-cols-[2fr_3fr] gap-10 mb-16">
               <motion.h2
                 variants={fadeUp}
                 className="text-3xl md:text-5xl font-bold uppercase leading-none"
