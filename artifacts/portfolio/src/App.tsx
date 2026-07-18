@@ -11,11 +11,12 @@ const ABOUT_TEXT =
 const TELEGRAM_LINK = "https://telegram.me/leahlysenko";
 
 // 4 текстовых факта под фото — редактируй текст в кавычках
+// \n внутри строки = перенос строки
 const FACTS = [
-  "Выпускница CG Education и School of Education",
-  "Проектирую обучение для взрослых и подростков в IT, нейротехе и креативных индустриях",
-  "Веду проекты от брифа до запуска и анализа результатов",
-  "Помогаю коллегам в решении их методических задач",
+  "Выпускница CG Education\nи School of Education",
+  "Проектирую обучение для взрослых\nи подростков в IT, нейротехе\nи креативных индустриях",
+  "Веду проекты от брифа до запуска\nи анализа результатов",
+  "Помогаю коллегам\nв решении их методических\nзадач",
 ];
 
 const SERVICES_SUBTITLE =
@@ -270,12 +271,12 @@ export default function App() {
             className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8"
           >
             {FACTS.map((text, i) => (
-              <motion.div key={i} variants={fadeUp} className="flex items-start gap-3">
+              <motion.div key={i} variants={fadeUp} className="flex flex-col gap-2">
                 <span
-                  className="mt-[6px] shrink-0 w-2 h-2 rounded-full"
+                  className="w-2 h-2 rounded-full"
                   style={{ backgroundColor: "hsl(162 38% 24%)" }}
                 />
-                <p className="text-sm font-serif leading-snug text-foreground/80">{text}</p>
+                <p className="text-sm font-serif leading-snug text-foreground/80 whitespace-pre-line">{text}</p>
               </motion.div>
             ))}
           </motion.div>
